@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -18,6 +19,7 @@ import Settings from '@material-ui/icons/Settings';
 import { Link } from 'react-router-dom';
 
 import { routes } from '../../App'
+import { DrawerContext } from '../../context/DrawerContext';
 
 const drawerWidth = 240;
 
@@ -60,56 +62,57 @@ export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
 
-  var handleClick = () => props.toggleMenu();
-  var open = props.open;
-
   return (
-    <Drawer
-      className={classes.drawer}
-      variant="persistent"
-      anchor="left"
-      open={open}
-      classes={{
-        paper: classes.drawerPaper,
-      }}
-    >
-      <div className={classes.drawerHeader} />
-      <List>
-        <Link className={classes.link} to={routes.HOME} onClick={props.toggleMenu}>
-          <ListItem button key="Live Video">
-            <ListItemIcon><Home /></ListItemIcon>
-            <ListItemText primary="Live Video" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to={routes.STATS} onClick={props.toggleMenu}>
-          <ListItem button key="Statistics">
-            <ListItemIcon><InsertChart /></ListItemIcon>
-            <ListItemText primary="Statistics" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link} to={routes.SETTINGS} onClick={props.toggleMenu}>
-          <ListItem button key="Settings">
-            <ListItemIcon><Settings /></ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link}  to={routes.RECORDINGS} onClick={props.toggleMenu}>
-          <ListItem button key="Recordings">
-            <ListItemIcon><VideoLibrary /></ListItemIcon>
-            <ListItemText primary="Recordings" />
-          </ListItem>
-        </Link>
-        <Link className={classes.link}  to={routes.LOGS} onClick={props.toggleMenu}>
-          <ListItem button key="Logs">
-            <ListItemIcon><Description /></ListItemIcon>
-            <ListItemText primary="Logs" />
-          </ListItem>
-        </Link>
-      </List>
-      <Divider />
-      <Typography className={classes.drawerFooter}>
-        ActionPi is made with ❤ by Andrea Cioni
-      </Typography>
-    </Drawer>
+    <DrawerContext.Consumer>
+      {({ isDrawerOpened, toggleDrawer }) => (
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={isDrawerOpened}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader} />
+          <List>
+            <Link className={classes.link} to={routes.HOME} onClick={toggleDrawer}>
+              <ListItem button key="Live Video">
+                <ListItemIcon><Home /></ListItemIcon>
+                <ListItemText primary="Live Video" />
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to={routes.STATS} onClick={toggleDrawer}>
+              <ListItem button key="Statistics">
+                <ListItemIcon><InsertChart /></ListItemIcon>
+                <ListItemText primary="Statistics" />
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to={routes.SETTINGS} onClick={toggleDrawer}>
+              <ListItem button key="Settings">
+                <ListItemIcon><Settings /></ListItemIcon>
+                <ListItemText primary="Settings" />
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to={routes.RECORDINGS} onClick={toggleDrawer}>
+              <ListItem button key="Recordings">
+                <ListItemIcon><VideoLibrary /></ListItemIcon>
+                <ListItemText primary="Recordings" />
+              </ListItem>
+            </Link>
+            <Link className={classes.link} to={routes.LOGS} onClick={toggleDrawer}>
+              <ListItem button key="Logs">
+                <ListItemIcon><Description /></ListItemIcon>
+                <ListItemText primary="Logs" />
+              </ListItem>
+            </Link>
+          </List>
+          <Divider />
+          <Typography className={classes.drawerFooter}>
+            ActionPi is made with ❤ by Andrea Cioni
+          </Typography>
+        </Drawer>
+      )}
+    </DrawerContext.Consumer>
   );
 }

@@ -7,8 +7,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import GitHub from '@material-ui/icons/GitHub';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import PropTypes from 'prop-types';
 
 import packageJson from '../../../package.json';
+import { DrawerContext } from '../../context/DrawerContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,27 +31,33 @@ export default function NavBar(props) {
 
   const classes = useStyles();
 
-  var handleClick = () => props.toggleMenu();
-
   return (
-    <div className={classes.root}>
-      <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar>
-          <IconButton onClick={handleClick} className={classes.menuButton} color="inherit" aria-label="menu">
-            { props.drawerOpened === true ? <ArrowBack/> : <MenuIcon />}
-          </IconButton>
-          <Typography variant="h6" className={classes.title}>
-            ActionPi
-            </Typography>
-          <Typography className={classes.title} align="right" variant="caption">
-            <IconButton color="secondary" aria-label="github" href="https://github.com/andreacioni/actionpi" target="_blank">
-              <GitHub />
-            </IconButton>
-              v{packageJson.version}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-    </div>
+    <DrawerContext.Consumer>
+      {({isDrawerOpened, toggleDrawer}) => (
+        <header className={classes.root}>
+          <AppBar position="fixed" className={classes.appBar}>
+            <Toolbar>
+              <IconButton onClick={toggleDrawer} className={classes.menuButton} color="inherit" aria-label="menu">
+                {isDrawerOpened === true ? <ArrowBack /> : <MenuIcon />}
+              </IconButton>
+              <Typography variant="h6" className={classes.title}>
+                {props.title}
+              </Typography>
+              <Typography className={classes.title} align="right" variant="caption">
+                <IconButton color="secondary" aria-label="github" href="https://github.com/andreacioni/actionpi" target="_blank">
+                  <GitHub />
+                </IconButton>
+                  v{packageJson.version}
+              </Typography>
+            </Toolbar>
+          </AppBar>
+        </header>
+      )}
+    </DrawerContext.Consumer>
   );
 
+}
+
+NavBar.propTypes = {
+  title: PropTypes.string
 }

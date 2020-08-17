@@ -5,13 +5,15 @@ import Drawer from './Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import {routes} from '../../App'
+import { routes } from '../../App'
 import AppBar from './NavBar'
 import LiveVideoScreen from '../screens/LiveVideoScreen';
 import DownloadVideoScreen from '../screens/RecordingsScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 import StatisticsScreen from '../screens/StatisticsScreen';
 import LogsScreen from '../screens/LogsScreen';
+import { DrawerContext } from '../../context/DrawerContext';
+import Footer from './Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    //padding: theme.spacing(3),
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -43,36 +45,41 @@ export default function PersistentDrawerLeft() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 
-  const toggleDrawerOpen = () => {
-    setOpen(!open);
+  const drawer = {
+    isDrawerOpened: open,
+    toggleDrawer: () => {
+      setOpen(!open);
+    }
   };
 
   return (
     <Router>
       <div className={classes.root}>
         <CssBaseline />
-        <AppBar drawerOpened={open} toggleMenu={toggleDrawerOpen} />
-        <Drawer open={open} toggleMenu={toggleDrawerOpen} />
-        <main className={classes.content}>
-          <div className={classes.drawerHeader} />
-          <Switch>
-            <Route exact path={routes.HOME}>
-              <LiveVideoScreen useStyles={classes}/>
-            </Route>
-            <Route path={routes.RECORDINGS}>
-              <DownloadVideoScreen useStyles={classes} />
-            </Route>
-            <Route path={routes.STATS}>
-              <StatisticsScreen useStyles={classes} />
-            </Route>
-            <Route path={routes.SETTINGS}>
-              <SettingsScreen useStyles={classes} />
-            </Route>
-            <Route path={routes.LOGS}>
-              <LogsScreen useStyles={classes} />
-            </Route>
-          </Switch>
-        </main>
+        <DrawerContext.Provider value={drawer}>
+          <Drawer open={open} />
+          <main className={classes.content}>
+            <div className={classes.drawerHeader} />
+            <Switch>
+              <Route exact path={routes.HOME}>
+                <LiveVideoScreen useStyles={classes} />
+              </Route>
+              <Route path={routes.RECORDINGS}>
+                <DownloadVideoScreen useStyles={classes} />
+              </Route>
+              <Route path={routes.STATS}>
+                <StatisticsScreen useStyles={classes} />
+              </Route>
+              <Route path={routes.SETTINGS}>
+                <SettingsScreen useStyles={classes} />
+              </Route>
+              <Route path={routes.LOGS}>
+                <LogsScreen useStyles={classes} />
+              </Route>
+            </Switch>
+          </main>
+          <Footer />
+        </DrawerContext.Provider>
       </div>
     </Router>
   );
