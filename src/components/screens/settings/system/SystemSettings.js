@@ -5,7 +5,7 @@ import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
 import RotateLeft from '@material-ui/icons/RotateLeft';
 import RotateRigth from '@material-ui/icons/RotateRight';
-import NavBar from '../../layout/NavBar';
+import NavBar from '../../../layout/NavBar';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -21,7 +21,8 @@ export default function SettingsScreen() {
 
   return (
     <div>
-      <NavBar title="Camera Settings" />      
+      <NavBar title="System Settings" />
+
       <Typography variant="subtitle1"> Video </Typography>
 
       <Typography variant="subtitle2"> Framerate </Typography>

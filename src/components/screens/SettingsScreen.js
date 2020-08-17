@@ -1,12 +1,11 @@
-import React from 'react';
+import { List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, FormControl, RadioGroup, FormControlLabel, Radio, FormLabel, Grid, Slider, Divider, Switch, IconButton, ListItemIcon, List, ListItem, ListItemText } from '@material-ui/core';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
-import RotateLeft from '@material-ui/icons/RotateLeft';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import Videocam from '@material-ui/icons/Videocam';
+import SdStorage from '@material-ui/icons/SdStorage';
+import React from 'react';
 import NavBar from '../layout/NavBar';
+import SettingListItem from './settings/SettingListItem';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -25,15 +24,9 @@ export default function SettingsScreen() {
       <NavBar title="Settings" />
 
       <List>
-        <ListItem>
-          <ListItemIcon><Videocam /></ListItemIcon>
-          <ListItemText primary="Camera" secondary="Framerate, bit-rate, rotation, size, etc ..." />
-        </ListItem>
-        <Divider />
-        <ListItem>
-          <ListItemIcon><SettingsApplications /></ListItemIcon>
-          <ListItemText primary="System" secondary="Read only file system, Wi-Fi, etc ..." />
-        </ListItem>
+        <SettingListItem icon={<Videocam />} title="Camera" subtitle="Framerate, bit-rate, rotation, size, etc ..." />
+        <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, etc ..." />
+        <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
       </List>
     </div>
   );
