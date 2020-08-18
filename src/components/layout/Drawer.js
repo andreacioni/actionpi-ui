@@ -1,25 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
+import { Grid, Switch } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
+import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
-import VideoLibrary from '@material-ui/icons/VideoLibrary';
-import Description from '@material-ui/icons/Description';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Home from '@material-ui/icons/Home'
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Brightness2 from '@material-ui/icons/Brightness2';
+import Description from '@material-ui/icons/Description';
+import Home from '@material-ui/icons/Home';
 import InsertChart from '@material-ui/icons/InsertChart';
 import Settings from '@material-ui/icons/Settings';
+import VideoLibrary from '@material-ui/icons/VideoLibrary';
+import WbSunny from '@material-ui/icons/WbSunny';
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { routes } from '../../App'
+import packageJson from '../../../package.json';
+import { routes } from '../../App';
 import { DrawerContext } from '../../context/DrawerContext';
+import GitHub from '@material-ui/icons/GitHub';
+import LogoImage from '../../images/logo.png'
 
 const drawerWidth = 240;
 
@@ -54,13 +56,22 @@ const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: 0,
     fontSize: '0.5rem',
-    padding: '10px'
+    padding: '10px',
+    'background-color': theme.palette.grey[50]
+  },
+  sunnyIcon: {
+    color: 'yellow'
+  },
+  logo: {
+    height: '35px'
   }
 }));
 
 export default function PersistentDrawerLeft(props) {
   const classes = useStyles();
   const theme = useTheme();
+
+  const [darkModeOn, setDarkModeOn] = React.useState(false);
 
   return (
     <DrawerContext.Consumer>
@@ -108,9 +119,62 @@ export default function PersistentDrawerLeft(props) {
             </Link>
           </List>
           <Divider />
-          <Typography className={classes.drawerFooter}>
-            ActionPi is made with ❤ by Andrea Cioni
-          </Typography>
+          <center>
+            <Typography component="div">
+              <Grid component="label" container alignItems="center" spacing={1}>
+                <Grid item><WbSunny className={classes.sunnyIcon} /></Grid>
+                <Grid item>
+                  <Switch checked={darkModeOn} onChange={() => setDarkModeOn(!darkModeOn)} />
+                </Grid>
+                <Grid item><Brightness2 /></Grid>
+              </Grid>
+            </Typography>
+          </center>
+
+          <Grid
+            container
+            direction="column"
+            justify="center"
+            alignItems="center"
+            className={classes.drawerFooter}>
+
+            <Grid item>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center"
+                spacing={1}>
+                  <Grid item>
+                    <img src={LogoImage} alt="Logo" className={classes.logo} />
+                  </Grid>
+                  <Grid item>
+                    <Typography className={classes.title} align="right" variant="h6">
+                      ActionPi
+                    </Typography>
+                  </Grid>
+              </Grid>
+            </Grid>
+            <Grid item>
+              <Grid
+                container
+                direction="row"
+                justify="center"
+                alignItems="center">
+                <Grid item>
+                  <IconButton aria-label="github" href="https://github.com/andreacioni/actionpi" target="_blank">
+                    <GitHub />
+                  </IconButton>
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.title} align="right" variant="caption">
+                    v{packageJson.version}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+
         </Drawer>
       )}
     </DrawerContext.Consumer>

@@ -5,11 +5,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import GitHub from '@material-ui/icons/GitHub';
 import ArrowBack from '@material-ui/icons/ArrowBack';
 import PropTypes from 'prop-types';
 
-import packageJson from '../../../package.json';
+
 import { DrawerContext } from '../../context/DrawerContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -42,12 +41,6 @@ export default function NavBar(props) {
               </IconButton>
               <Typography variant="h6" className={classes.title}>
                 {props.title}
-              </Typography>
-              <Typography className={classes.title} align="right" variant="caption">
-                <IconButton color="secondary" aria-label="github" href="https://github.com/andreacioni/actionpi" target="_blank">
-                  <GitHub />
-                </IconButton>
-                  v{packageJson.version}
               </Typography>
             </Toolbar>
           </AppBar>

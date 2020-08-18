@@ -17,6 +17,9 @@ import Footer from './Footer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100vh',
   },
   drawerHeader: {
     display: 'flex',

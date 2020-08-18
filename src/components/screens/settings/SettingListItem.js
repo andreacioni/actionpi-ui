@@ -11,7 +11,7 @@ export default function SettingListItem(props) {
 
     return (
         <div>
-            <ListItem>
+            <ListItem button divider>
                 <ListItemIcon>{props.icon}</ListItemIcon>
                 <ListItemText primary={props.title} secondary={props.subtitle} />
             </ListItem>

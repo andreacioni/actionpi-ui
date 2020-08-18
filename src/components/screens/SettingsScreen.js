@@ -25,7 +25,7 @@ export default function SettingsScreen() {
 
       <List>
         <SettingListItem icon={<Videocam />} title="Camera" subtitle="Framerate, bit-rate, rotation, size, etc ..." />
-        <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, etc ..." />
+        <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, button actions, etc ..." />
         <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
       </List>
     </div>

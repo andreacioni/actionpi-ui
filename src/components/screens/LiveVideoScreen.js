@@ -3,6 +3,7 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import { ButtonGroup, Button } from '@material-ui/core';
 import NavBar from '../layout/NavBar';
+import ImgPlaceholder from '../../images/stream_placeholder.png'
 
 const useStyles = makeStyles((theme) => ({
   expandedImg: {
@@ -18,7 +19,7 @@ export default function LiveVideoScreen() {
     <div>
       <NavBar title="ActionPi" />
       <div>
-        <img src="https://via.placeholder.com/320x240" className={classes.expandedImg} />
+        <img src={ImgPlaceholder} alt="Live capture" className={classes.expandedImg} />
         <Typography variant="caption" >
           <i>*Currently displayed video quality may differ from the recording</i>
         </Typography>
