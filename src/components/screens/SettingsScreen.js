@@ -6,6 +6,8 @@ import SdStorage from '@material-ui/icons/SdStorage';
 import React from 'react';
 import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
+import { Link } from 'react-router-dom';
+import { routes } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -13,6 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
   marginDivider: {
     'margin-bottom': '10px'
+  },
+  link: {
+  'text-decoration': 'none'
   }
 }));
 
@@ -24,7 +29,9 @@ export default function SettingsScreen() {
       <NavBar title="Settings" />
 
       <List>
-        <SettingListItem icon={<Videocam />} title="Camera" subtitle="Framerate, bit-rate, rotation, size, etc ..." />
+        <Link className={classes.link} to={routes.CAMERA_SETTINGS}>
+          <SettingListItem icon={<Videocam />} title="Camera" subtitle="Framerate, bit-rate, rotation, size, etc ..." />
+        </Link>
         <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, button actions, etc ..." />
         <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
       </List>

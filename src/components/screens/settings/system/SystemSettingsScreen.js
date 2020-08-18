@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SettingsScreen() {
+export default function SystemSettingsScreen() {
   const classes = useStyles();
 
   return (

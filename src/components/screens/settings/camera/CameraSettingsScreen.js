@@ -16,13 +16,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function SettingsScreen() {
+export default function CameraSettingsScreen() {
   const classes = useStyles();
 
   return (
     <div>
       <NavBar title="Camera Settings" />      
-      <Typography variant="subtitle1"> Video </Typography>
 
       <Typography variant="subtitle2"> Framerate </Typography>
       <Grid container spacing={2}>
