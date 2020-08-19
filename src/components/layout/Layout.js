@@ -75,7 +75,7 @@ export default function PersistentDrawerLeft() {
               <Route path={routes.STATS}>
                 <StatisticsScreen useStyles={classes} />
               </Route>
-              <Route path={routes.SETTINGS}>
+              <Route exact path={routes.SETTINGS}>
                 <SettingsScreen useStyles={classes} />
               </Route>
               <Route path={routes.LOGS}>

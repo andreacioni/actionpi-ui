@@ -32,8 +32,12 @@ export default function SettingsScreen() {
         <Link className={classes.link} to={routes.CAMERA_SETTINGS}>
           <SettingListItem icon={<Videocam />} title="Camera" subtitle="Framerate, bit-rate, rotation, size, etc ..." />
         </Link>
-        <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, button actions, etc ..." />
-        <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
+        <Link className={classes.link} to={routes.SYSTEM_SETTINGS}>
+          <SettingListItem icon={<SettingsApplications />} title="System" subtitle="Read only file system, Wi-Fi, button actions, etc ..." />
+        </Link>
+        <Link className={classes.link} to={routes.FILESYSTEM_SETTINGS}>
+          <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
+        </Link>
       </List>
     </div>
   );
