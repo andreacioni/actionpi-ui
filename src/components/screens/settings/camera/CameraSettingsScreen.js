@@ -1,11 +1,11 @@
-import React from 'react';
+import { Divider, FormControl, FormControlLabel, FormLabel, Grid, IconButton, Radio, RadioGroup, Slider, Switch, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, FormControl, RadioGroup, FormControlLabel, Radio, FormLabel, Grid, Slider, Divider, Switch, IconButton } from '@material-ui/core';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
 import RotateLeft from '@material-ui/icons/RotateLeft';
 import RotateRigth from '@material-ui/icons/RotateRight';
-import NavBar from '../../../layout/NavBar';
+import VolumeDown from '@material-ui/icons/VolumeDown';
+import VolumeUp from '@material-ui/icons/VolumeUp';
+import React from 'react';
+import SettingsAppBar from '../SettingsAppBar';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -21,7 +21,7 @@ export default function CameraSettingsScreen() {
 
   return (
     <div>
-      <NavBar title="Camera Settings" />      
+      <SettingsAppBar title="Camera" />
 
       <Typography variant="subtitle2"> Framerate </Typography>
       <Grid container spacing={2}>
@@ -35,7 +35,7 @@ export default function CameraSettingsScreen() {
           <VolumeUp />
         </Grid>
       </Grid>
-      
+
       <Typography variant="subtitle2"> Rotation </Typography>
       <IconButton aria-label="rotate-left">
         <RotateLeft />
@@ -44,8 +44,8 @@ export default function CameraSettingsScreen() {
         <RotateRigth />
       </IconButton>
 
-      <Divider className={classes.marginDivider}/>
-      
+      <Divider className={classes.marginDivider} />
+
       <Typography variant="subtitle1"> OS </Typography>
 
       <FormControlLabel
@@ -54,7 +54,7 @@ export default function CameraSettingsScreen() {
       />
 
       <Typography />
-      
+
       <FormControl component="fieldset">
         <FormLabel component="legend">WiFi</FormLabel>
         <RadioGroup aria-label="gender" name="gender1">

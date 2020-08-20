@@ -6,6 +6,7 @@ import VolumeUp from '@material-ui/icons/VolumeUp';
 import RotateLeft from '@material-ui/icons/RotateLeft';
 import RotateRigth from '@material-ui/icons/RotateRight';
 import NavBar from '../../../layout/NavBar';
+import SettingsAppBar from '../SettingsAppBar';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -21,42 +22,8 @@ export default function SystemSettingsScreen() {
 
   return (
     <div>
-      <NavBar title="System Settings" />
+      <SettingsAppBar title="System" />
 
-      <Typography variant="subtitle1"> Video </Typography>
-
-      <Typography variant="subtitle2"> Framerate </Typography>
-      <Grid container spacing={2}>
-        <Grid item>
-          <VolumeDown />
-        </Grid>
-        <Grid item xs>
-          <Slider min={1} max={60} value={10} aria-labelledby="continuous-slider" />
-        </Grid>
-        <Grid item>
-          <VolumeUp />
-        </Grid>
-      </Grid>
-      
-      <Typography variant="subtitle2"> Rotation </Typography>
-      <IconButton aria-label="rotate-left">
-        <RotateLeft />
-      </IconButton>
-      <IconButton aria-label="rotate-rigth">
-        <RotateRigth />
-      </IconButton>
-
-      <Divider className={classes.marginDivider}/>
-      
-      <Typography variant="subtitle1"> OS </Typography>
-
-      <FormControlLabel
-        control={<Switch checked={true} name="checkedA" />}
-        label="Read Only Partition"
-      />
-
-      <Typography />
-      
       <FormControl component="fieldset">
         <FormLabel component="legend">WiFi</FormLabel>
         <RadioGroup aria-label="gender" name="gender1">
@@ -64,6 +31,13 @@ export default function SystemSettingsScreen() {
           <FormControlLabel value="hotspot" control={<Radio />} label="Hotspot" />
         </RadioGroup>
       </FormControl>
+
+      <Typography />
+      
+      <FormControlLabel
+        control={<Switch checked={true} name="checkedA" />}
+        label="Read Only Partition"
+      />
 
     </div>
   );

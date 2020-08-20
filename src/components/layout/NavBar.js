@@ -32,7 +32,7 @@ export default function NavBar(props) {
 
   return (
     <DrawerContext.Consumer>
-      {({isDrawerOpened, toggleDrawer}) => (
+      {({ isDrawerOpened, toggleDrawer }) => (
         <header className={classes.root}>
           <AppBar position="fixed" className={classes.appBar}>
             <Toolbar>
@@ -52,5 +52,5 @@ export default function NavBar(props) {
 }
 
 NavBar.propTypes = {
-  title: PropTypes.string
+  title: PropTypes.string,
 }
