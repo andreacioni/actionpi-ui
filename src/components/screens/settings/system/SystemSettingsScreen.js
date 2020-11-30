@@ -7,6 +7,7 @@ import RotateLeft from '@material-ui/icons/RotateLeft';
 import RotateRigth from '@material-ui/icons/RotateRight';
 import NavBar from '../../../layout/NavBar';
 import SettingsAppBar from '../SettingsAppBar';
+import SettingsScreenContainer from '../SettingsScreenContainer'
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -23,22 +24,22 @@ export default function SystemSettingsScreen() {
   return (
     <div>
       <SettingsAppBar title="System" />
+      <SettingsScreenContainer>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">WiFi</FormLabel>
+          <RadioGroup aria-label="gender" name="gender1">
+            <FormControlLabel value="client" control={<Radio />} label="Client" />
+            <FormControlLabel value="hotspot" control={<Radio />} label="Hotspot" />
+          </RadioGroup>
+        </FormControl>
 
-      <FormControl component="fieldset">
-        <FormLabel component="legend">WiFi</FormLabel>
-        <RadioGroup aria-label="gender" name="gender1">
-          <FormControlLabel value="client" control={<Radio />} label="Client" />
-          <FormControlLabel value="hotspot" control={<Radio />} label="Hotspot" />
-        </RadioGroup>
-      </FormControl>
-
-      <Typography />
-      
-      <FormControlLabel
-        control={<Switch checked={true} name="checkedA" />}
-        label="Read Only Partition"
-      />
-
+        <Typography />
+        
+        <FormControlLabel
+          control={<Switch checked={true} name="checkedA" />}
+          label="Read Only Partition"
+        />
+      </SettingsScreenContainer>
     </div>
   );
 }

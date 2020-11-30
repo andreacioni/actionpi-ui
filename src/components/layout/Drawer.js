@@ -83,8 +83,7 @@ export default function PersistentDrawerLeft(props) {
           open={isDrawerOpened}
           classes={{
             paper: classes.drawerPaper,
-          }}
-        >
+          }}>
           <div className={classes.drawerHeader} />
           <List>
             <Link className={classes.link} to={routes.HOME} onClick={toggleDrawer}>
@@ -145,14 +144,14 @@ export default function PersistentDrawerLeft(props) {
                 justify="center"
                 alignItems="center"
                 spacing={1}>
-                  <Grid item>
-                    <img src={LogoImage} alt="Logo" className={classes.logo} />
-                  </Grid>
-                  <Grid item>
-                    <Typography className={classes.title} align="right" variant="h6">
-                      ActionPi
+                <Grid item>
+                  <img src={LogoImage} alt="Logo" className={classes.logo} />
+                </Grid>
+                <Grid item>
+                  <Typography className={classes.title} align="right" variant="h6">
+                    ActionPi
                     </Typography>
-                  </Grid>
+                </Grid>
               </Grid>
             </Grid>
             <Grid item>

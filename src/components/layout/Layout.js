@@ -16,6 +16,7 @@ import { DrawerContext } from '../../context/DrawerContext';
 import Footer from './Footer';
 import SystemSettingsScreen from '../screens/settings/system/SystemSettingsScreen';
 import CameraSettingsScreen from '../screens/settings/camera/CameraSettingsScreen';
+import StorageSettingsScreen from '../screens/settings/storage/StorageSettingsScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -88,7 +89,7 @@ export default function PersistentDrawerLeft() {
                 <CameraSettingsScreen useStyles={classes} />
               </Route>
               <Route path={routes.FILESYSTEM_SETTINGS}>
-                <LogsScreen useStyles={classes} />
+                <StorageSettingsScreen useStyles={classes} />
               </Route>
             </Switch>
           </main>
