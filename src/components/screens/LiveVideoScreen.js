@@ -16,12 +16,12 @@ export default function LiveVideoScreen() {
   const classes = useStyles();
 
   return (
-    <div>
+    <React.Fragment>
       <NavBar title="ActionPi" />
       <div>
         <img src={ImgPlaceholder} alt="Live capture" className={classes.expandedImg} />
         <Typography variant="caption" >
-          <i>*Currently displayed video quality may differ from the recording</i>
+          <i>*Recording quality may be different</i>
         </Typography>
       </div>
       <center>
@@ -34,6 +34,6 @@ export default function LiveVideoScreen() {
           <Button>Reboot</Button>
         </ButtonGroup>
       </center>
-    </div>
+      </React.Fragment>
   );
 }

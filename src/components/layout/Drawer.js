@@ -92,12 +92,12 @@ export default function PersistentDrawerLeft(props) {
                 <ListItemText primary="Live Video" />
               </ListItem>
             </Link>
-            <Link className={classes.link} to={routes.STATS} onClick={toggleDrawer}>
+            {/* <Link className={classes.link} to={routes.STATS} onClick={toggleDrawer}>
               <ListItem button key="Statistics">
                 <ListItemIcon><InsertChart /></ListItemIcon>
                 <ListItemText primary="Statistics" />
               </ListItem>
-            </Link>
+            </Link> */}
             <Link className={classes.link} to={routes.SETTINGS} onClick={toggleDrawer}>
               <ListItem button key="Settings">
                 <ListItemIcon><Settings /></ListItemIcon>
@@ -110,15 +110,15 @@ export default function PersistentDrawerLeft(props) {
                 <ListItemText primary="Recordings" />
               </ListItem>
             </Link>
-            <Link className={classes.link} to={routes.LOGS} onClick={toggleDrawer}>
+            {/* <Link className={classes.link} to={routes.LOGS} onClick={toggleDrawer}>
               <ListItem button key="Logs">
                 <ListItemIcon><Description /></ListItemIcon>
                 <ListItemText primary="Logs" />
               </ListItem>
-            </Link>
+            </Link> */}
           </List>
           <Divider />
-          <center>
+          {/* <center>
             <Typography component="div">
               <Grid component="label" container alignItems="center" spacing={1}>
                 <Grid item><WbSunny className={classes.sunnyIcon} /></Grid>
@@ -128,7 +128,7 @@ export default function PersistentDrawerLeft(props) {
                 <Grid item><Brightness2 /></Grid>
               </Grid>
             </Typography>
-          </center>
+          </center> */}
 
           <Grid
             container
