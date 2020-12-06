@@ -26,14 +26,6 @@ export default function SettingsScreen() {
 
   const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpenFramerateDialog(true);
-  };
-
-  const handleClose = () => {
-    setOpenFramerateDialog(false);
-  };
-
   const enableHotspotCheckbox = (
   <ListItemSecondaryAction>
     <Checkbox
@@ -69,7 +61,7 @@ const enableReadWriteCheckbox = (
           action={<IconButton onClick={() => setOpenFramerateDialog(true)}><Edit/></IconButton>} />
         <SettingListItem icon={<Wifi />} 
           title="WiFi hotspot" 
-          subtitle="Enable/Disable the internal WiFi hostpost. When disabling hostspot the ActionPi will try to connect to a configured WiFi network." 
+          subtitle="Enable/Disable the internal WiFi hotspost. When disabling hotsspot the ActionPi will try to connect to a configured WiFi network." 
           button={false}
           action={enableHotspotCheckbox} />
         <SettingListItem 
