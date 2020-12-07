@@ -1,4 +1,4 @@
-import { Grid, Switch } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,13 +8,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-import Brightness2 from '@material-ui/icons/Brightness2';
-import Description from '@material-ui/icons/Description';
 import Home from '@material-ui/icons/Home';
-import InsertChart from '@material-ui/icons/InsertChart';
 import Settings from '@material-ui/icons/Settings';
 import VideoLibrary from '@material-ui/icons/VideoLibrary';
-import WbSunny from '@material-ui/icons/WbSunny';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import packageJson from '../../../package.json';
@@ -67,11 +63,10 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function PersistentDrawerLeft(props) {
+export default function PersistentDrawerLeft() {
   const classes = useStyles();
-  const theme = useTheme();
 
-  const [darkModeOn, setDarkModeOn] = React.useState(false);
+  const [] = React.useState(false);
 
   return (
     <DrawerContext.Consumer>

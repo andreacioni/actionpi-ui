@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ButtonGroup, Button, Grid, Paper, Typography } from '@material-ui/core';
-import { Thermometer } from 'mdi-material-ui'; 
+import { Thermometer, Speedometer, Memory, Harddisk } from 'mdi-material-ui'; 
 import NavBar from '../layout/NavBar';
 import StatPaper from './live_video/StatPaper';
 import ImgPlaceholder from '../../images/stream_placeholder.png'
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LiveVideoScreen() {
   const classes = useStyles();
-
+  
   return (
     <React.Fragment>
       <NavBar title="ActionPi" />
@@ -36,21 +36,26 @@ export default function LiveVideoScreen() {
           <Button>Start</Button>
         </ButtonGroup>
       </center>
-      <Typography>Status</Typography>
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <StatPaper icon={Thermometer} title={'CPU Temperature'} value={30}/>
+      <br/>
+      <Paper>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Typography>Status</Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={30}/>
+          </Grid>
+          <Grid item xs={6}>
+            <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={12}/>
+          </Grid>
+          <Grid item xs={6}>
+            <StatPaper icon={<Memory/>} title={'RAM Usage'} value={60}/>
+          </Grid>
+          <Grid item xs={6}>
+            <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={40}/>
+          </Grid>
         </Grid>
-        <Grid item xs={6}>
-          <StatPaper title={'CPU Load'} value={12}/>
-        </Grid>
-        <Grid item xs={6}>
-          <StatPaper title={'RAM Usage'} value={60}/>
-        </Grid>
-        <Grid item xs={6}>
-          <StatPaper title={'Disk Usage'} value={40}/>
-        </Grid>
-      </Grid>
+      </Paper>
       </React.Fragment>
   );
 }

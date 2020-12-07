@@ -24,13 +24,11 @@ export default function StatPaper(props) {
     const classes = useStyles();
   
     return (
-        <Paper className={classes.paper}>
-            <Grid container spacing={1}>
-                <Grid item xs={1}>{props.icon}</Grid>
-                <Grid item className={classes.title} xs={8}>{props.title}</Grid>
-                <Grid item className={classes.value} xs={3}>{props.value}</Grid>
-            </Grid>
-        </Paper>
+        <Grid container spacing={2}>
+            <Grid item xs={2}>{props.icon}</Grid>
+            <Grid item className={classes.title} xs={8}>{props.title}</Grid>
+            <Grid item className={classes.value} xs={2}>{props.value}</Grid>
+        </Grid>
     );
 }
 
