@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function LiveVideoScreen() {
   const classes = useStyles();
+
+  useEffect(() => {
+    fetch('localhost:').
+  });
   
   return (
     <React.Fragment>
