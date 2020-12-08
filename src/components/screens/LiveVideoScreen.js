@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ButtonGroup, Button, Grid, Paper, Typography } from '@material-ui/core';
 import { Thermometer, Speedometer, Memory, Harddisk } from 'mdi-material-ui'; 
@@ -20,9 +20,16 @@ const useStyles = makeStyles((theme) => ({
 export default function LiveVideoScreen() {
   const classes = useStyles();
 
-  useEffect(() => {
-    fetch('localhost:').
-  });
+  const [info, setInfo] = useState({
+    'system': {
+        'cpu_temperature': 0,
+        'cpu_load': 0,
+        'mem_usage': 0,
+        'disk_usage': 0
+    },
+    'recording': false,
+    'framerate': 0
+  })
   
   return (
     <React.Fragment>
@@ -36,8 +43,8 @@ export default function LiveVideoScreen() {
       <center>
         <br/>
         <ButtonGroup size="large" color="primary" aria-label="large outlined secondary button group" variant="contained">
-          <Button>Stop</Button>
-          <Button>Start</Button>
+          <Button disabled={info['recording'] === false}>Stop</Button>
+          <Button disabled={info['recording'] === true}>Start</Button>
         </ButtonGroup>
       </center>
       <br/>
@@ -47,16 +54,16 @@ export default function LiveVideoScreen() {
             <Typography>Status</Typography>
           </Grid>
           <Grid item xs={6}>
-            <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={30}/>
+            <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={info['system']['cpu_temperature']}/>
           </Grid>
           <Grid item xs={6}>
-            <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={12}/>
+            <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={info['system']['cpu_load']}/>
           </Grid>
           <Grid item xs={6}>
-            <StatPaper icon={<Memory/>} title={'RAM Usage'} value={60}/>
+            <StatPaper icon={<Memory/>} title={'RAM Usage'} value={info['system']['mem_usage']}/>
           </Grid>
           <Grid item xs={6}>
-            <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={40}/>
+            <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={info['system']['disk_usage']}/>
           </Grid>
         </Grid>
       </Paper>
