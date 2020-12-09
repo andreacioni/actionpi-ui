@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ButtonGroup, Button, Grid, Paper, Typography } from '@material-ui/core';
 import { Thermometer, Speedometer, Memory, Harddisk } from 'mdi-material-ui'; 
 import NavBar from '../layout/NavBar';
 import StatPaper from './live_video/StatPaper';
 import ImgPlaceholder from '../../images/stream_placeholder.png'
+import { BASE_URL } from '../../globals'
 
 const useStyles = makeStyles((theme) => ({
   expandedImg: {
@@ -30,6 +31,12 @@ export default function LiveVideoScreen() {
     'recording': false,
     'framerate': 0
   })
+
+  useEffect(() => {
+    fetch(BASE_URL + '/api/status')
+    .then((response) => console.log(response))
+    .catch(() => console.error('There was an error getting status'))
+  });
   
   return (
     <React.Fragment>
