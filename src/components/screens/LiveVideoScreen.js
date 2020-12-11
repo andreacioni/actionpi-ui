@@ -26,7 +26,10 @@ export default function LiveVideoScreen() {
         'cpu_temperature': 0,
         'cpu_load': 0,
         'mem_usage': 0,
-        'disk_usage': 0
+        'disk_usage': {
+          'mountpoint': '/',
+          'percent': 10
+        }
     },
     'recording': false,
     'framerate': 0
@@ -34,8 +37,11 @@ export default function LiveVideoScreen() {
 
   useEffect(() => {
     fetch(BASE_URL + '/api/status')
-    .then((response) => console.log(response))
-    .catch(() => console.error('There was an error getting status'))
+    .then((response) => response.json().then((v) => {
+      console.log(v)
+      setInfo(v)
+    }))
+    .catch((e) => console.error('There was an error getting status:', e))
   });
   
   return (
