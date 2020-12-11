@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { ButtonGroup, Button, Grid, Paper, Typography } from '@material-ui/core';
-import { Thermometer, Speedometer, Memory, Harddisk } from 'mdi-material-ui'; 
+import { Thermometer, Speedometer, Memory, Harddisk, Record, Stop } from 'mdi-material-ui'; 
 import NavBar from '../layout/NavBar';
 import StatPaper from './live_video/StatPaper';
 import ImgPlaceholder from '../../images/stream_placeholder.png'
@@ -15,34 +15,66 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     color: theme.palette.text.secondary,
-  }
+  },
+  buttonContainer: {
+    'text-align': 'center',
+    'margin': '10px 0 10px 0'
+  },
 }));
 
 export default function LiveVideoScreen() {
   const classes = useStyles();
 
-  const [info, setInfo] = useState({
+  const [status, setStatus] = useState({
     'system': {
         'cpu_temperature': 0,
         'cpu_load': 0,
         'mem_usage': 0,
-        'disk_usage': {
+        'disk_usage': [{
           'mountpoint': '/',
-          'percent': 10
-        }
+          'percent': 0
+        }]
     },
-    'recording': false,
+    'recording': null,
     'framerate': 0
-  })
-
-  useEffect(() => {
-    fetch(BASE_URL + '/api/status')
-    .then((response) => response.json().then((v) => {
-      console.log(v)
-      setInfo(v)
-    }))
-    .catch((e) => console.error('There was an error getting status:', e))
   });
+
+  const [recording, setRecording] = useState(false);
+
+  let autoFetchInterval;
+
+  const fetchStatusData = () => {
+    fetch(BASE_URL + '/api/status')
+    .then((response) => response.json())
+    .then((v) => {
+      console.log(v)
+      setStatus(v)
+      setRecording(v['recording'])
+
+      if(autoFetchInterval === undefined) {
+        autoFetchInterval = setInterval(fetchStatusData, 2000)
+      }
+    })
+    .catch((e) => console.error('There was an error getting status:', e))
+
+    return () => {clearInterval(autoFetchInterval)}
+  };
+
+  const startRecording = (recording) => {
+    setRecording(recording)
+    
+    fetch(BASE_URL + '/api/' + (recording ? 'start' : 'stop'))
+    .then((response) => response)
+    .then((v) => {
+      setRecording(recording)
+    })
+    .catch((e) => {
+      console.error('There was en error setting recording status:', recording, e);
+      setRecording(!recording)
+    });
+  };
+
+  useEffect(fetchStatusData, []);
   
   return (
     <React.Fragment>
@@ -53,33 +85,33 @@ export default function LiveVideoScreen() {
           <i>*Recording quality may be different</i>
         </Typography>
       </div>
-      <center>
-        <br/>
+      <div className={classes.buttonContainer}>
         <ButtonGroup size="large" color="primary" aria-label="large outlined secondary button group" variant="contained">
-          <Button disabled={info['recording'] === false}>Stop</Button>
-          <Button disabled={info['recording'] === true}>Start</Button>
+          <Button startIcon={<Stop/>} disabled={recording === false} onClick={() => startRecording(false)}>Stop</Button>
+          <Button startIcon={<Record/>} disabled={recording === true} onClick={() => startRecording(true)}>Rec</Button>
         </ButtonGroup>
-      </center>
-      <br/>
-      <Paper>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Typography>Status</Typography>
+      </div>
+      <div>
+        <Paper>
+          <Grid container>
+            <Grid item xs={12}>
+              <Typography>Status</Typography>
+            </Grid>
+            <Grid item xs={6}>
+              <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={status['system']['cpu_temperature']}/>
+            </Grid>
+            <Grid item xs={6}>
+              <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={status['system']['cpu_load']}/>
+            </Grid>
+            <Grid item xs={6}>
+              <StatPaper icon={<Memory/>} title={'RAM Usage'} value={status['system']['mem_usage']}/>
+            </Grid>
+            <Grid item xs={6}>
+              <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={status['system']['disk_usage'][0]['percent']}/>
+            </Grid>
           </Grid>
-          <Grid item xs={6}>
-            <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={info['system']['cpu_temperature']}/>
-          </Grid>
-          <Grid item xs={6}>
-            <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={info['system']['cpu_load']}/>
-          </Grid>
-          <Grid item xs={6}>
-            <StatPaper icon={<Memory/>} title={'RAM Usage'} value={info['system']['mem_usage']}/>
-          </Grid>
-          <Grid item xs={6}>
-            <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={info['system']['disk_usage']}/>
-          </Grid>
-        </Grid>
-      </Paper>
-      </React.Fragment>
+        </Paper>
+      </div>
+    </React.Fragment>
   );
 }
