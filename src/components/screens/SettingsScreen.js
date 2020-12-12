@@ -8,6 +8,7 @@ import SettingListItem from './settings/SettingListItem';
 import { Link } from 'react-router-dom';
 import { routes } from '../../App';
 import FramerateDialog from './settings/FramerateDialog';
+import { BASE_URL } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({
   screenTitle: {
@@ -25,20 +26,29 @@ export default function SettingsScreen() {
   const classes = useStyles();
 
   const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
+  
+  const [isFilesystemRW, setFilesystemRW] = React.useState(false);
+  const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
 
-  const enableHotspotCheckbox = (
-  <ListItemSecondaryAction>
-    <Checkbox
-      edge="end"
-    />
-  </ListItemSecondaryAction>);
+  const callSetFileSystemRW = (value) => {
+    fetch(BASE_URL + '/api/mountrw')
+    .catch((e) => {
+      console.error('Can\'t mount filesystem R/W', e);
+      setFilesystemRW(!value);
+    });
 
-const enableReadWriteCheckbox = (
-  <ListItemSecondaryAction>
-    <Checkbox
-      edge="end"
-    />
-  </ListItemSecondaryAction>);
+    setFilesystemRW(value);
+  };
+
+  const callSetHotspotEnabled = (value) => {
+    const onOff = value === true ? 'on' : 'off';
+    fetch(BASE_URL + '/api/hotspot?enable=' + onOff).catch((e) => {
+      console.error('Can\'t mount filesystem R/W', e);
+      setHotspotEnabled(!value);
+    });
+    
+    setHotspotEnabled(value);
+  };
 
   return (
     <React.Fragment>
@@ -63,13 +73,13 @@ const enableReadWriteCheckbox = (
           title="WiFi hotspot" 
           subtitle="Enable/Disable the internal WiFi hotspost. When disabling hotsspot the ActionPi will try to connect to a configured WiFi network." 
           button={false}
-          action={enableHotspotCheckbox} />
+          action={<ListItemSecondaryAction><Checkbox onChange={(e,checked) => callSetHotspotEnabled(checked)} edge="end"/></ListItemSecondaryAction>} />
         <SettingListItem 
           icon={<SdCard />} 
           title="Mount R/W" 
           subtitle="After a reboot, file system will be mounted in read & write mode." 
           button={false}
-          action={enableReadWriteCheckbox} />
+          action={<ListItemSecondaryAction><Checkbox onChange={(e,checked) => callSetFileSystemRW(checked)} edge="end"/></ListItemSecondaryAction>} />
         <SettingListItem 
           icon={<Replay />} 
           title="Reboot" 
