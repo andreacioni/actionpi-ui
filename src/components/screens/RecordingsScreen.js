@@ -20,16 +20,15 @@ const useStyles = makeStyles((theme) => ({}));
       .then((recordings) => setRecordingsList(recordings))
     }, []);
 
-    const recordingTiles = recordingsList.map((r) => 
-      <RecordingTile key={r} fileName={r} fileSize={123435} />
-    );
   
     return (
       <div>
         <NavBar title="Recordings" />
 
         <List>
-          {recordingTiles}
+          {recordingsList.map((r) => 
+            <RecordingTile key={r['name']} fileName={r['name']} fileSize={r['size']} />
+          )}
         </List>
       </div>
     );

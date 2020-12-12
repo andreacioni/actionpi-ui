@@ -1,8 +1,9 @@
-import { Divider, ListItem, ListItemIcon, ListItemText, Grid, ListItemSecondaryAction, IconButton } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import { Movie, Image, GetApp, PlayCircleOutline } from '@material-ui/icons'
-import PropTypes from 'prop-types';
 import React from 'react';
+import { Divider, ListItem, ListItemIcon, ListItemText, Link, ListItemSecondaryAction, IconButton } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Movie, Image, GetApp, Cancel } from '@material-ui/icons'
+import PropTypes from 'prop-types';
+import { BASE_URL } from '../../../globals'
 
 const useStyles = makeStyles((theme) => ({}));
 
@@ -13,12 +14,14 @@ export default function RecordingTile(props) {
 
     return (
         <ListItem divider key={props.key}>
-            <ListItemIcon>{isVideo ? <Movie /> : <Image />}</ListItemIcon>
-            <ListItemText primary={props.fileName} secondary={"Size: " + props.fileSize} />
+            <ListItemIcon>{isVideo ? <Movie /> : <Cancel />}</ListItemIcon>
+            <ListItemText primary={props.fileName} secondary={"Size: " + props.fileSize + ' bytes'} />
             <ListItemSecondaryAction>
-                <IconButton>
-                    <GetApp />
-                </IconButton>
+                <Link href={BASE_URL + '/api/recording/' + props.fileName}>
+                    <IconButton disabled={isVideo === false}>
+                        <GetApp />
+                    </IconButton>         
+                </Link>
                 {/* <IconButton>
                     <PlayCircleOutline />
                 </IconButton> */}
