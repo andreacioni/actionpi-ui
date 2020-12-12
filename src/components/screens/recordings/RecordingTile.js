@@ -12,24 +12,23 @@ export default function RecordingTile(props) {
     const isVideo = props.fileName.endsWith('.h264');
 
     return (
-        <div>
-            <ListItem divider>
-                <ListItemIcon>{isVideo ? <Movie /> : <Image />}</ListItemIcon>
-                <ListItemText primary={props.fileName} secondary={"Size: " + props.fileSize} />
-                <ListItemSecondaryAction>
-                    <IconButton>
-                        <GetApp />
-                    </IconButton>
-                    <IconButton>
-                        <PlayCircleOutline />
-                    </IconButton>
-                </ListItemSecondaryAction>
-            </ListItem>
-        </div>
+        <ListItem divider key={props.key}>
+            <ListItemIcon>{isVideo ? <Movie /> : <Image />}</ListItemIcon>
+            <ListItemText primary={props.fileName} secondary={"Size: " + props.fileSize} />
+            <ListItemSecondaryAction>
+                <IconButton>
+                    <GetApp />
+                </IconButton>
+                {/* <IconButton>
+                    <PlayCircleOutline />
+                </IconButton> */}
+            </ListItemSecondaryAction>
+        </ListItem>
     );
 }
 
 RecordingTile.propTypes = {
+    key: PropTypes.any.isRequired,
     fileName: PropTypes.string,
     fileSize: PropTypes.number
 }

@@ -3,6 +3,7 @@ import { List } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NavBar from '../layout/NavBar';
 import RecordingTile from './recordings/RecordingTile';
+import { BASE_URL } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({}));
   
@@ -11,18 +12,24 @@ const useStyles = makeStyles((theme) => ({}));
 
     const [isLoading, setIsLoading] = useState(true);
 
+    const [recordingsList, setRecordingsList] = useState([]);
+
     useEffect(() => {
       fetch(BASE_URL + '/api/recordings')
       .then((response) => response.json())
-      .then((recordings) => recordings.)
+      .then((recordings) => setRecordingsList(recordings))
     }, []);
+
+    const recordingTiles = recordingsList.map((r) => 
+      <RecordingTile key={r} fileName={r} fileSize={123435} />
+    );
   
     return (
       <div>
         <NavBar title="Recordings" />
 
         <List>
-          <RecordingTile fileName="video.h264" fileSize={123435} />
+          {recordingTiles}
         </List>
       </div>
     );
