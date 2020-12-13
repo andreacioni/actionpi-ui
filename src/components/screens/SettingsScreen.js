@@ -62,6 +62,7 @@ export default function SettingsScreen() {
     fetch(BASE_URL + '/api/status')
     .then((response) => response.json())
     .then((json) => {
+      console.log('Current status:', json);
       setHotspotEnabled(json['system']['hotspot_enabled']);
       setFilesystemRW(json['system']['disk_usage'][0]['rw']);
       setFramerate(json['framerate']);
@@ -73,7 +74,7 @@ export default function SettingsScreen() {
   return (
     <React.Fragment>
       <NavBar title="Settings" />
-      
+
       {(isLoading === true) 
         ? <CircularProgress className={classes.loadingIndicator} />
         :<List>
@@ -109,9 +110,13 @@ export default function SettingsScreen() {
         </List>
       }
 
+      {console.log(framerate)}
+
       <FramerateDialog 
+        initialFramerate={framerate}
         open={openFramerateDialog} 
-        onClose={() => setOpenFramerateDialog(!openFramerateDialog)}/>
+        onClose={() => setOpenFramerateDialog(!openFramerateDialog)}
+      />
     </React.Fragment>
   );
 }

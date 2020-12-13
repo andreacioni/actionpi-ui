@@ -1,31 +1,43 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Slider from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import {Grid, Slider,Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button} from '@material-ui/core';
 
 export default function FramerateDialog(props) {
+  const [framerate, setFramerate] = React.useState(props.initialFramerate)
+
+  React.useEffect(() => {
+    setFramerate(props.initialFramerate);
+  }, [props.initialFramerate]);
+
   return (
     <React.Fragment>
       <Dialog open={props.open} onClose={props.onClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Framerate</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Change framerate
+            Current framerate: {framerate} FPS
           </DialogContentText>
-          <Slider
-            defaultValue={10}
-            aria-labelledby="discrete-slider"
-            valueLabelDisplay="auto"
-            step={5}
-            marks
-            min={5}
-            max={30}
-        />
+          <Grid container spacing={2}>
+            <Grid item>
+              5
+            </Grid>
+            <Grid item xs>
+            <Slider
+              value={framerate}
+              aria-labelledby="discrete-slider"
+              valueLabelDisplay="auto"
+              onChange={(e, value) => setFramerate(value)}
+              step={5}
+              marks={true}
+              min={5}
+              max={30}
+            />
+            </Grid>
+            <Grid item>
+              30
+            </Grid>
+          </Grid>
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={props.onClose} color="primary">
@@ -42,5 +54,6 @@ export default function FramerateDialog(props) {
 
 FramerateDialog.propTypes = {
     open: PropTypes.bool.isRequired,
-    onClose: PropTypes.func
+    onClose: PropTypes.func,
+    initialFramerate: PropTypes.number.isRequired
 }
