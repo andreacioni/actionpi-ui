@@ -39,7 +39,7 @@ export default function LiveVideoScreen() {
     'framerate': 0
   });
 
-  const [recording, setRecording] = useState(false);
+  const [recording, setRecording] = useState(null);
 
   let autoFetchInterval;
 
@@ -87,8 +87,8 @@ export default function LiveVideoScreen() {
       </div>
       <div className={classes.buttonContainer}>
         <ButtonGroup size="large" color="primary" aria-label="large outlined secondary button group" variant="contained">
-          <Button startIcon={<Stop/>} disabled={recording === false} onClick={() => startRecording(false)}>Stop</Button>
-          <Button startIcon={<Record/>} disabled={recording === true} onClick={() => startRecording(true)}>Rec</Button>
+          <Button startIcon={<Stop/>} disabled={recording === null || recording === false} onClick={() => startRecording(false)}>Stop</Button>
+          <Button startIcon={<Record/>} disabled={recording === null || recording === true} onClick={() => startRecording(true)}>Rec</Button>
         </ButtonGroup>
       </div>
       <div>
