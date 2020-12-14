@@ -110,8 +110,6 @@ export default function SettingsScreen() {
         </List>
       }
 
-      {console.log(framerate)}
-
       <FramerateDialog 
         initialFramerate={framerate}
         open={openFramerateDialog} 

@@ -9,9 +9,14 @@ export default function FramerateDialog(props) {
     setFramerate(props.initialFramerate);
   }, [props.initialFramerate]);
 
+  const onClose = () => {
+    props.onClose();
+    setFramerate(props.initialFramerate);
+  };
+
   return (
     <React.Fragment>
-      <Dialog open={props.open} onClose={props.onClose} aria-labelledby="form-dialog-title">
+      <Dialog open={props.open} onClose={onClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Framerate</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -40,10 +45,10 @@ export default function FramerateDialog(props) {
           
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={onClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={onClose} color="primary">
             Ok
           </Button>
         </DialogActions>
