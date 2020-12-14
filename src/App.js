@@ -22,7 +22,8 @@ export const routes = {
   FILESYSTEM_SETTINGS: '/settings/filesystem',
   SYSTEM_SETTINGS: '/settings/system',
   STATS: '/monitor',
-  LOGS: '/logs'
+  LOGS: '/logs',
+  REBOOTING: '/rebooting'
 }
 class App extends Component {
 

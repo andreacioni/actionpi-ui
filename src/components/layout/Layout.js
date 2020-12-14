@@ -17,6 +17,7 @@ import Footer from './Footer';
 import SystemSettingsScreen from '../screens/settings/system/SystemSettingsScreen';
 import CameraSettingsScreen from '../screens/settings/camera/CameraSettingsScreen';
 import StorageSettingsScreen from '../screens/settings/storage/StorageSettingsScreen';
+import RebootingScreen from '../screens/RebootingScreen';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -90,6 +91,9 @@ export default function Layout() {
               </Route>
               <Route path={routes.FILESYSTEM_SETTINGS}>
                 <StorageSettingsScreen useStyles={classes} />
+              </Route>
+              <Route path={routes.REBOOTING}>
+                <RebootingScreen useStyles={classes} />
               </Route>
             </Switch>
           </main>
