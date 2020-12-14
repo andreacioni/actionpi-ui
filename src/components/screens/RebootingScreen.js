@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
 
     const [waitTime, setWaitTime] = React.useState(120);
 
-    React.useState(() => {
+    React.useEffect(() => {
       if(waitTime > 0) {
         setTimeout(() => setWaitTime(waitTime-1), 1000);
       }
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
       <div className={classes.centerDiv}>
         <Typography variant="h3">Rebooting...</Typography>
         <Replay fontSize="large"/>
-        <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload ()</Button>
+        <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
       </div>
     );
   }
