@@ -40,13 +40,13 @@ export default function RebootingScreen() {
   return (
     <div className={classes.centerDiv}>
 
-      <Grid container spacing={1}>
+      <Grid container spacing={1} alignItems="center" alignContent="center" justify="center">
         <Grid item>
           <Typography variant="h3">Rebooting...</Typography>
         </Grid>
-        <Grid item xs={12} alignItems="center" alignContent="center" justify="center">
+{/*         <Grid item>
           <Replay fontSize="large"/>
-        </Grid>
+        </Grid> */}
         <Grid item>
           <LinkButton href={routes.HOME} disabled={waitTime !== 0}>
             <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
