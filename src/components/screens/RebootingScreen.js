@@ -15,22 +15,22 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
   
-  export default function RebootingScreen() {
-    const classes = useStyles();
+export default function RebootingScreen() {
+  const classes = useStyles();
 
-    const [waitTime, setWaitTime] = React.useState(120);
+  const [waitTime, setWaitTime] = React.useState(120);
 
-    React.useEffect(() => {
-      if(waitTime > 0) {
-        setTimeout(() => setWaitTime(waitTime-1), 1000);
-      }
-    }, [waitTime]);
-  
-    return (
-      <div className={classes.centerDiv}>
-        <Typography variant="h3">Rebooting...</Typography>
-        <Replay fontSize="large"/>
-        <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    if(waitTime > 0) {
+      setTimeout(() => setWaitTime(waitTime-1), 1000);
+    }
+  }, [waitTime]);
+
+  return (
+    <div className={classes.centerDiv}>
+      <Typography variant="h3">Rebooting...</Typography>
+      <Replay fontSize="large"/>
+      <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
+    </div>
+  );
+}
