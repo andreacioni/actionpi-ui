@@ -44,12 +44,12 @@ export default function RebootingScreen() {
         <Grid item>
           <Typography variant="h3">Rebooting...</Typography>
         </Grid>
-{/*         <Grid item>
-          <Replay fontSize="large"/>
-        </Grid> */}
+        <Grid item>
+          <Typography variant="body1">This operation could take up to 2 min.</Typography>
+        </Grid>
         <Grid item>
           <LinkButton href={routes.HOME} disabled={waitTime !== 0}>
-            <Button disabled={waitTime !== 0} variant="contained" color="primary">Reload {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
+            <Button disabled={waitTime !== 0} variant="contained" color="primary">Homepage {waitTime !== 0 ? "(" + waitTime + ")" : ""}</Button>
           </LinkButton>
         </Grid>
       </Grid>
