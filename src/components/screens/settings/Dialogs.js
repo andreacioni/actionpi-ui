@@ -94,8 +94,13 @@ export function WifiDialog(props) {
     setWifiConfig(props.wifiConfig);
   };
 
-  const validateFields = () => {
-
+  const onModeChange = (_e, value) => {
+    const hotspot = value === "hotspot";
+    setHotspotEnabled(hotspot);
+    if(hotspot) {
+      console.log("clear")
+      setWifiConfig({ssid: null, password: null});
+    }
   };
 
   return (
@@ -109,7 +114,7 @@ export function WifiDialog(props) {
               <FormLabel component="legend">Mode</FormLabel>
               <RadioGroup row aria-label="mode" name="mode1" 
                 value={isHotspotEnabled === true ? "hotspot" : "client"} 
-                onChange={(_e, value) => setHotspotEnabled(value === "hotspot")}>
+                onChange={onModeChange}>
                   <FormControlLabel value="hotspot" control={<Radio />} label="Hotspot" />
                   <FormControlLabel value="client" control={<Radio />} label="Client" />
               </RadioGroup>
@@ -138,7 +143,7 @@ export function WifiDialog(props) {
           <Button onClick={props.onClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={validateFields} color="primary">
+          <Button onClick={props.onClose} color="primary">
             Ok
           </Button>
         </DialogActions>
