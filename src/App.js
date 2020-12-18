@@ -19,6 +19,7 @@ export const routes = {
   RECORDINGS: '/recordings',
   SETTINGS: '/settings',
   CAMERA_SETTINGS: '/settings/camera',
+  NETWORK_SETTINGS: '/settings/network',
   FILESYSTEM_SETTINGS: '/settings/filesystem',
   SYSTEM_SETTINGS: '/settings/system',
   STATS: '/monitor',
