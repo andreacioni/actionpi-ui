@@ -1,13 +1,13 @@
-import { List, ListItemSecondaryAction, Checkbox, IconButton, CircularProgress } from '@material-ui/core';
+import { List, ListItemSecondaryAction, Switch, IconButton, CircularProgress, Grid, Button, Icon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import {Wifi, Replay, SdCard, Camera, Edit} from '@material-ui/icons';
+import {Wifi, Replay, SdCard, Camera, Edit, ChevronRight, Check, Cancel} from '@material-ui/icons';
 import React from 'react';
 import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
 import { Link } from 'react-router-dom';
 import { routes } from '../../App';
-import FramerateDialog from './settings/FramerateDialog';
+import { FramerateDialog, WifiDialog } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,13 +18,17 @@ const useStyles = makeStyles((theme) => ({
     'margin-bottom': '10px'
   },
   link: {
-  'text-decoration': 'none'
+  'text-decoration': 'none',
+  'color': 'inherit'
   },
   loadingIndicator: {
     'position': 'absolute',
     'top': '50%',
     'left': '45%'
 
+  },
+  buttonGrid: {
+    'margin-top': 10
   }
 }));
 
@@ -32,10 +36,16 @@ export default function SettingsScreen() {
   const classes = useStyles();
 
   const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
+  const [openWifiDialog, setOpenWifiDialog] = React.useState(false);
   
   const [isLoading, setLoading] = React.useState(true)
+  
   const [isFilesystemRW, setFilesystemRW] = React.useState(false);
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
+  const [wifiConfig, setWifiConfig] = React.useState({
+    ssid: null, 
+    password: null
+  });
   const [framerate, setFramerate] = React.useState(0);
 
   const callSetFileSystemRW = (value) => {
@@ -44,8 +54,6 @@ export default function SettingsScreen() {
       console.error('Can\'t mount filesystem R/W', e);
       setFilesystemRW(!value);
     });
-
-    setFilesystemRW(value);
   };
 
   const callSetHotspotEnabled = (value) => {
@@ -54,8 +62,6 @@ export default function SettingsScreen() {
       console.error('Can\'t mount filesystem R/W', e);
       setHotspotEnabled(!value);
     });
-    
-    setHotspotEnabled(value);
   };
 
   React.useEffect(() => {
@@ -93,16 +99,16 @@ export default function SettingsScreen() {
             button={false}
             action={<IconButton onClick={() => setOpenFramerateDialog(true)}><Edit/></IconButton>} />
           <SettingListItem icon={<Wifi />} 
-            title="WiFi hotspot" 
-            subtitle="Enable/Disable the internal WiFi hotspost. When disabling hotsspot the ActionPi will try to connect to a configured WiFi network." 
+            title="Network" 
+            subtitle="Manage network connectivity" 
             button={false}
-            action={<ListItemSecondaryAction><Checkbox checked={isHotspotEnabled} onChange={(e,checked) => callSetHotspotEnabled(checked)} edge="end"/></ListItemSecondaryAction>} />
+            action={<IconButton onClick={() => setOpenWifiDialog(true)}><Edit/></IconButton>} />
           <SettingListItem 
             icon={<SdCard />} 
             title="Mount R/W" 
-            subtitle="After a reboot, file system will be mounted in read & write mode." 
+            subtitle='After device reboot, filesystem is mounted in R/W mode. This setting is "volatile" and it will be lost after a second reboot.'
             button={false}
-            action={<ListItemSecondaryAction><Checkbox checked={isFilesystemRW} onChange={(e,checked) => callSetFileSystemRW(checked)} edge="end"/></ListItemSecondaryAction>} />
+            action={<ListItemSecondaryAction><Switch checked={isFilesystemRW} onChange={(_e,checked) => setFilesystemRW(checked)} edge="end"/></ListItemSecondaryAction>} />
           <SettingListItem 
             icon={<Replay />} 
             title="Reboot" 
@@ -114,6 +120,12 @@ export default function SettingsScreen() {
         initialFramerate={framerate}
         open={openFramerateDialog} 
         onClose={() => setOpenFramerateDialog(!openFramerateDialog)}
+      />
+      <WifiDialog 
+        hotspot={isHotspotEnabled}
+        wifiConfig={wifiConfig}
+        open={openWifiDialog} 
+        onClose={() => setOpenWifiDialog(!openWifiDialog)}
       />
     </React.Fragment>
   );
