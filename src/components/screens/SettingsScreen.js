@@ -1,4 +1,4 @@
-import { List, ListItemSecondaryAction, Switch, IconButton, CircularProgress, Grid, Button, Icon } from '@material-ui/core';
+import { List, ListItemSecondaryAction, Switch, IconButton, CircularProgress, Grid, Button, Icon, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import {Wifi, Replay, SdCard, Camera, Edit, ChevronRight, Check, Cancel, Warning} from '@material-ui/icons';
@@ -92,12 +92,12 @@ export default function SettingsScreen() {
             </Link>
             <Link className={classes.link} to={routes.FILESYSTEM_SETTINGS}>
             <SettingListItem icon={<SdStorage />} title="Storage" subtitle="File system usage, clear all data, etc ..." />
-          </Link> */}
+          </Link> 
           <SettingListItem icon={<Camera />} 
             title="Framerate" 
             subtitle="Change recording frame rate" 
             button={false}
-            action={<IconButton onClick={() => setOpenFramerateDialog(true)}><Edit/></IconButton>} />
+            action={<IconButton onClick={() => setOpenFramerateDialog(true)}><Edit/></IconButton>} />*/}
           <SettingListItem icon={<Wifi />} 
             title="Network" 
             subtitle="Manage network connectivity" 
@@ -113,7 +113,7 @@ export default function SettingsScreen() {
             icon={<Replay />} 
             title="Reboot" 
             subtitle="ActionPi will be rebooted. This is required to apply the changes you made here."
-            action={<IconButton title="Reboot to apply changes"><Warning color="primary"/></IconButton>} />
+            action={<Tooltip title="Reboot to apply changes"><Warning color="primary"/></Tooltip>} />
         </List>
       }
 
