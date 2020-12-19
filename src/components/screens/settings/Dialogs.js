@@ -14,7 +14,8 @@ import {
   Radio, 
   FormControl, 
   FormLabel,
-  TextField
+  TextField,
+  Typography
 } from '@material-ui/core';
 
 export function FramerateDialog(props) {
@@ -79,33 +80,30 @@ FramerateDialog.propTypes = {
 
 export function WifiDialog(props) {
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
-  const [wifiConfig, setWifiConfig] = React.useState({
-    ssid: null, 
-    password: null
-  });
+  const [ssid, setSSID] = React.useState();
+  const [password, setPassword] = React.useState();
 
   React.useEffect(() => {
-    setHotspotEnabled(props.hotspot);
-    setWifiConfig(props.wifiConfig);
-  }, [props.hotspot, props.wifiConfig]);
-
-  const onExit = () => {
-    setHotspotEnabled(props.hotspot);
-    setWifiConfig(props.wifiConfig);
-  };
+    setHotspotEnabled(props.hotspotEnabled);
+    setSSID(props.ssid);
+    setPassword(props.password);
+  }, [props.hotspotEnabled, props.ssid, props.password]);
 
   const onModeChange = (_e, value) => {
-    const hotspot = value === "hotspot";
-    setHotspotEnabled(hotspot);
-    if(hotspot) {
-      console.log("clear")
-      setWifiConfig({ssid: null, password: null});
-    }
+    const hotspotEnabled = value === "hotspot";
+    setHotspotEnabled(hotspotEnabled);
+    setSSID(null);
+    setPassword(null);
+  };
+
+  const onExit = () => {
+    setSSID(null);
+    setPassword(null);
   };
 
   return (
     <React.Fragment>
-      <Dialog open={props.open} onClose={props.onClose} onExited={onExit} aria-labelledby="form-dialog-title">
+      <Dialog open={props.open} onClose={() => props.onClose()} onExit={onExit} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">WiFi</DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>
@@ -123,27 +121,27 @@ export function WifiDialog(props) {
             <Grid item xs={6}>
               <TextField 
                 id="ssid" 
-                required
                 disabled={isHotspotEnabled}
                 label="SSID"
-                value={wifiConfig.ssid}/>
+                value={isHotspotEnabled ? '' : ssid}
+                onChange={(e) => setSSID(e.target.value)}/>
             </Grid>
             <Grid item xs={6}>
             <TextField 
               id="wifi-password" 
-              required
               disabled={isHotspotEnabled}
               label="Password"
               type="password"
-              value={wifiConfig.password}/>
+              value={isHotspotEnabled ? '' : password}
+              onChange={(e) => setPassword(e.target.value)}/>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={() => props.onClose()} color="primary">
             Cancel
           </Button>
-          <Button onClick={props.onClose} color="primary">
+          <Button onClick={() => props.onClose(isHotspotEnabled, ssid, password)} color="primary">
             Ok
           </Button>
         </DialogActions>
@@ -155,6 +153,35 @@ export function WifiDialog(props) {
 WifiDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
-    hotspot: PropTypes.bool,
-    wifiConfig: PropTypes.object
+    hotspotEnabled: PropTypes.bool,
+    ssid: PropTypes.string,
+    password: PropTypes.string
+}
+
+export function ConfirmReboot(props) {
+
+  return (
+    <React.Fragment>
+      <Dialog open={props.open} onClose={() => props.onCancel()} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">WiFi</DialogTitle>
+        <DialogContent>
+          <Typography variant=""></Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => props.onCancel()} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => props.onConfirm()} color="primary">
+            Ok
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </React.Fragment>
+  );
+}
+
+ConfirmReboot.propTypes = {
+    open: PropTypes.bool.isRequired,
+    onConfirm: PropTypes.func,
+    onCancel: PropTypes.func,
 }

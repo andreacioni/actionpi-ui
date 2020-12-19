@@ -1,4 +1,14 @@
-import { List, ListItemSecondaryAction, Switch, IconButton, CircularProgress, Grid, Button, Icon, Tooltip } from '@material-ui/core';
+import { 
+  List, 
+  ListItemSecondaryAction, 
+  Switch, 
+  IconButton, 
+  CircularProgress, 
+  Grid, 
+  Button, 
+  Icon, 
+  Tooltip,
+ } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import SettingsApplications from '@material-ui/icons/SettingsApplications';
 import {Wifi, Replay, SdCard, Camera, Edit, ChevronRight, Check, Cancel, Warning} from '@material-ui/icons';
@@ -7,7 +17,7 @@ import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
 import { Link } from 'react-router-dom';
 import { routes } from '../../App';
-import { FramerateDialog, WifiDialog } from './settings/Dialogs';
+import { FramerateDialog, WifiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
 
 const useStyles = makeStyles((theme) => ({
@@ -35,33 +45,52 @@ const useStyles = makeStyles((theme) => ({
 export default function SettingsScreen() {
   const classes = useStyles();
 
-  const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
+  //const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
   const [openWifiDialog, setOpenWifiDialog] = React.useState(false);
+  const [openConfirmReboot, setOpenConfirmRebootDialog] = React.useState(false);
   
   const [isLoading, setLoading] = React.useState(true)
+  const [rebootRequired, setRebootRequired] = React.useState(false)
   
   const [isFilesystemRW, setFilesystemRW] = React.useState(false);
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
-  const [wifiConfig, setWifiConfig] = React.useState({
-    ssid: null, 
-    password: null
-  });
-  const [framerate, setFramerate] = React.useState(0);
+  //const [framerate, setFramerate] = React.useState(0);
 
-  const callSetFileSystemRW = (value) => {
-    fetch(BASE_URL + '/api/mountrw')
-    .catch((e) => {
-      console.error('Can\'t mount filesystem R/W', e);
-      setFilesystemRW(!value);
-    });
+  const onCloseWiFiDialog = (enableHotspot, ssid, password) => {
+    if(enableHotspot !== undefined) {
+      console.log('New WiFi config received:', enableHotspot, ssid, password)
+      callSetWiFiConfig(enableHotspot, ssid, password);
+      setRebootRequired(true);
+    }
+    setOpenWifiDialog(!openWifiDialog);
+  }
+
+  const callSetWiFiConfig = (enableHotspot, ssid, password) => {
+    if(enableHotspot !== undefined) {
+      console.log('New WiFi config received:', enableHotspot, ssid, password)
+      
+      const enable = enableHotspot ? 'on' : 'off';
+      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURI(ssid) : '') + '&password=' + (password ? encodeURI(password) : '')) 
+      .then(() => setRebootRequired(true))
+      .catch((e) => {
+        console.error('Can\'t enable/disable WiFi hotspot', e);
+        setHotspotEnabled(!enableHotspot);
+      });      
+      
+      setHotspotEnabled(enableHotspot);
+    }
   };
 
-  const callSetHotspotEnabled = (value) => {
-    const onOff = value === true ? 'on' : 'off';
-    fetch(BASE_URL + '/api/hotspot?enable=' + onOff).catch((e) => {
+  const callSetFileSystemMode = (checked) => {
+    const mode = checked ? 'rw' : 'ro';
+    fetch(BASE_URL + '/api/mount?mode=' + mode)
+    .then(() => setRebootRequired(true))
+    .catch((e) => {
       console.error('Can\'t mount filesystem R/W', e);
-      setHotspotEnabled(!value);
+      setFilesystemRW(!checked);
     });
+
+    setFilesystemRW(checked);
   };
 
   React.useEffect(() => {
@@ -71,7 +100,7 @@ export default function SettingsScreen() {
       console.log('Current status:', json);
       setHotspotEnabled(json['system']['hotspot_enabled']);
       setFilesystemRW(json['system']['disk_usage'][0]['rw']);
-      setFramerate(json['framerate']);
+      //setFramerate(json['framerate']);
       setLoading(false);
     })
     .catch((e) => console.log('Can\'t retrieve status', e))
@@ -99,7 +128,7 @@ export default function SettingsScreen() {
             button={false}
             action={<IconButton onClick={() => setOpenFramerateDialog(true)}><Edit/></IconButton>} />*/}
           <SettingListItem icon={<Wifi />} 
-            title="Network" 
+            title={"Network (" + (isHotspotEnabled ? 'Hotspot' : 'Client') + ")"} 
             subtitle="Manage network connectivity" 
             button={false}
             action={<IconButton onClick={() => setOpenWifiDialog(true)}><Edit/></IconButton>} />
@@ -108,25 +137,30 @@ export default function SettingsScreen() {
             title="Mount R/W" 
             subtitle='After device reboot, filesystem is mounted in R/W mode. This setting is "volatile" and it will be lost after a second reboot.'
             button={false}
-            action={<ListItemSecondaryAction><Switch checked={isFilesystemRW} onChange={(_e,checked) => setFilesystemRW(checked)} edge="end"/></ListItemSecondaryAction>} />
+            action={<ListItemSecondaryAction><Switch checked={isFilesystemRW} onChange={(_e,checked) => callSetFileSystemMode(checked)} edge="end"/></ListItemSecondaryAction>} />
           <SettingListItem 
             icon={<Replay />} 
             title="Reboot" 
+            on
             subtitle="ActionPi will be rebooted. This is required to apply the changes you made here."
-            action={<Tooltip title="Reboot to apply changes"><Warning color="primary"/></Tooltip>} />
+            action={rebootRequired ? <Tooltip title="Reboot to apply changes"><Warning color="primary"/></Tooltip> : null} />
         </List>
       }
 
-      <FramerateDialog 
+{/*       <FramerateDialog 
         initialFramerate={framerate}
         open={openFramerateDialog} 
         onClose={() => setOpenFramerateDialog(!openFramerateDialog)}
-      />
+      /> */}
       <WifiDialog 
-        hotspot={isHotspotEnabled}
-        wifiConfig={wifiConfig}
+        hotspotEnabled={isHotspotEnabled}
         open={openWifiDialog} 
-        onClose={() => setOpenWifiDialog(!openWifiDialog)}
+        onClose={onCloseWiFiDialog}
+      />
+      <ConfirmReboot 
+        open={openConfirmReboot} 
+        onCancel={() => setOpenConfirmRebootDialog(false)}
+        onConfirm={() => fetch(BASE_URL + '/reboot')}
       />
     </React.Fragment>
   );

@@ -47,7 +47,6 @@ export default function LiveVideoScreen() {
     fetch(BASE_URL + '/api/status')
     .then((response) => response.json())
     .then((v) => {
-      console.log(v)
       setStatus(v)
       setRecording(v['recording'])
 
