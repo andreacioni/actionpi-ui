@@ -163,9 +163,9 @@ export function ConfirmReboot(props) {
   return (
     <React.Fragment>
       <Dialog open={props.open} onClose={() => props.onCancel()} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">WiFi</DialogTitle>
+        <DialogTitle id="form-dialog-title">Confirm</DialogTitle>
         <DialogContent>
-          <Typography variant=""></Typography>
+          <Typography variant="body1">The board will be reboot. Continue?</Typography>
         </DialogContent>
         <DialogActions>
           <Button onClick={() => props.onCancel()} color="primary">

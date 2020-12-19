@@ -10,7 +10,7 @@ export default function SettingListItem(props) {
 
     return (
         <React.Fragment>
-            <ListItem button={props.button} divider>
+            <ListItem onClick={props.onClick} button={props.button} divider>
                 <ListItemIcon>{props.icon}</ListItemIcon>
                 <ListItemText primary={props.title} secondary={props.subtitle} />
                 {props.action}
@@ -25,7 +25,8 @@ SettingListItem.propTypes = {
     action: PropTypes.element,
     title: PropTypes.string,
     subtitle: PropTypes.string,
-    button: PropTypes.bool
+    button: PropTypes.bool,
+    onClick: PropTypes.func,
 }
 
 SettingListItem.defaultProps = {

@@ -15,7 +15,7 @@ import {Wifi, Replay, SdCard, Camera, Edit, ChevronRight, Check, Cancel, Warning
 import React from 'react';
 import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { routes } from '../../App';
 import { FramerateDialog, WifiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
@@ -55,6 +55,8 @@ export default function SettingsScreen() {
   const [isFilesystemRW, setFilesystemRW] = React.useState(false);
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
   //const [framerate, setFramerate] = React.useState(0);
+
+  const history = useHistory();
 
   const onCloseWiFiDialog = (enableHotspot, ssid, password) => {
     if(enableHotspot !== undefined) {
@@ -141,7 +143,7 @@ export default function SettingsScreen() {
           <SettingListItem 
             icon={<Replay />} 
             title="Reboot" 
-            on
+            onClick={() => setOpenConfirmRebootDialog(true)}
             subtitle="ActionPi will be rebooted. This is required to apply the changes you made here."
             action={rebootRequired ? <Tooltip title="Reboot to apply changes"><Warning color="primary"/></Tooltip> : null} />
         </List>
@@ -160,7 +162,11 @@ export default function SettingsScreen() {
       <ConfirmReboot 
         open={openConfirmReboot} 
         onCancel={() => setOpenConfirmRebootDialog(false)}
-        onConfirm={() => fetch(BASE_URL + '/reboot')}
+        onConfirm={() => {
+          fetch(BASE_URL + '/api/reboot');
+          setOpenConfirmRebootDialog(false);
+          history.push("/rebooting");
+        }}
       />
     </React.Fragment>
   );
