@@ -23,9 +23,12 @@ export default function RebootingScreen() {
   const [waitTime, setWaitTime] = React.useState(120);
 
   React.useEffect(() => {
+    let timeout;
     if(waitTime > 0) {
-      setTimeout(() => setWaitTime(waitTime-1), 1000);
+      timeout = setTimeout(() => setWaitTime(waitTime-1), 1000);
     }
+
+    return () => clearTimeout(timeout);
   }, [waitTime]);
 
   const LinkButton = ({disabled, href, children}) => (

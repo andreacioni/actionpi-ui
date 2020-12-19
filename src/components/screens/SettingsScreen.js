@@ -58,15 +58,6 @@ export default function SettingsScreen() {
 
   const history = useHistory();
 
-  const onCloseWiFiDialog = (enableHotspot, ssid, password) => {
-    if(enableHotspot !== undefined) {
-      console.log('New WiFi config received:', enableHotspot, ssid, password)
-      callSetWiFiConfig(enableHotspot, ssid, password);
-      setRebootRequired(true);
-    }
-    setOpenWifiDialog(!openWifiDialog);
-  }
-
   const callSetWiFiConfig = (enableHotspot, ssid, password) => {
     if(enableHotspot !== undefined) {
       console.log('New WiFi config received:', enableHotspot, ssid, password)
@@ -81,6 +72,8 @@ export default function SettingsScreen() {
       
       setHotspotEnabled(enableHotspot);
     }
+    
+    setOpenWifiDialog(false);
   };
 
   const callSetFileSystemMode = (checked) => {
@@ -157,7 +150,7 @@ export default function SettingsScreen() {
       <WifiDialog 
         hotspotEnabled={isHotspotEnabled}
         open={openWifiDialog} 
-        onClose={onCloseWiFiDialog}
+        onClose={callSetWiFiConfig}
       />
       <ConfirmReboot 
         open={openConfirmReboot} 

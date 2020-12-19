@@ -96,14 +96,17 @@ export function WifiDialog(props) {
     setPassword(null);
   };
 
-  const onExit = () => {
-    setSSID(null);
-    setPassword(null);
+  const handleCancel = () => {
+    props.onClose();
   };
+  
+  const handleOk = () => {
+    props.onClose(isHotspotEnabled, ssid, password);
+  }
 
   return (
     <React.Fragment>
-      <Dialog open={props.open} onClose={() => props.onClose()} onExit={onExit} aria-labelledby="form-dialog-title">
+      <Dialog open={props.open} onClose={handleCancel} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">WiFi</DialogTitle>
         <DialogContent>
           <Grid container spacing={1}>
@@ -111,7 +114,7 @@ export function WifiDialog(props) {
             <FormControl component="fieldset">
               <FormLabel component="legend">Mode</FormLabel>
               <RadioGroup row aria-label="mode" name="mode1" 
-                value={isHotspotEnabled === true ? "hotspot" : "client"} 
+                value={isHotspotEnabled ? "hotspot" : "client"} 
                 onChange={onModeChange}>
                   <FormControlLabel value="hotspot" control={<Radio />} label="Hotspot" />
                   <FormControlLabel value="client" control={<Radio />} label="Client" />
@@ -123,7 +126,7 @@ export function WifiDialog(props) {
                 id="ssid" 
                 disabled={isHotspotEnabled}
                 label="SSID"
-                value={isHotspotEnabled ? '' : ssid}
+                value={isHotspotEnabled ? '' : (ssid ? ssid : '**********')}
                 onChange={(e) => setSSID(e.target.value)}/>
             </Grid>
             <Grid item xs={6}>
@@ -132,16 +135,16 @@ export function WifiDialog(props) {
               disabled={isHotspotEnabled}
               label="Password"
               type="password"
-              value={isHotspotEnabled ? '' : password}
+              value={isHotspotEnabled ? '' : (password ? password : '**********')}
               onChange={(e) => setPassword(e.target.value)}/>
             </Grid>
           </Grid>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => props.onClose()} color="primary">
+          <Button onClick={handleCancel} color="primary">
             Cancel
           </Button>
-          <Button onClick={() => props.onClose(isHotspotEnabled, ssid, password)} color="primary">
+          <Button onClick={handleOk} color="primary">
             Ok
           </Button>
         </DialogActions>

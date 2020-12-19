@@ -13,6 +13,7 @@ import SettingsScreen from '../screens/SettingsScreen'
 import StatisticsScreen from '../screens/StatisticsScreen';
 import LogsScreen from '../screens/LogsScreen';
 import { DrawerContext } from '../../context/DrawerContext';
+import { SettingsContext } from '../../context/SettingsContext';
 import Footer from './Footer';
 import SystemSettingsScreen from '../screens/settings/system/SystemSettingsScreen';
 import CameraSettingsScreen from '../screens/settings/camera/CameraSettingsScreen';
@@ -60,48 +61,54 @@ export default function Layout() {
     }
   };
 
+  const settings = {
+    rebootRequired: false
+  };
+
   return (
     <Router>
       <div className={classes.root}>
         <CssBaseline />
         <DrawerContext.Provider value={drawer}>
-          <Drawer open={open} />
-          <main className={classes.content}>
-            <div className={classes.drawerHeader} />
-            <Switch>
-              <Route exact path={routes.HOME}>
-                <LiveVideoScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.RECORDINGS}>
-                <DownloadVideoScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.STATS}>
-                <StatisticsScreen useStyles={classes} />
-              </Route>
-              <Route exact path={routes.SETTINGS}>
-                <SettingsScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.LOGS}>
-                <LogsScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.SYSTEM_SETTINGS}>
-                <SystemSettingsScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.CAMERA_SETTINGS}>
-                <CameraSettingsScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.FILESYSTEM_SETTINGS}>
-                <StorageSettingsScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.NETWORK_SETTINGS}>
-                <ConfigureConnectionScreen useStyles={classes} />
-              </Route>
-              <Route path={routes.REBOOTING}>
-                <RebootingScreen useStyles={classes} />
-              </Route>
-            </Switch>
-          </main>
-          <Footer />
+          <SettingsContext.Provider value={drawer}>
+            <Drawer open={open} />
+            <main className={classes.content}>
+              <div className={classes.drawerHeader} />
+              <Switch>
+                <Route exact path={routes.HOME}>
+                  <LiveVideoScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.RECORDINGS}>
+                  <DownloadVideoScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.STATS}>
+                  <StatisticsScreen useStyles={classes} />
+                </Route>
+                <Route exact path={routes.SETTINGS}>
+                  <SettingsScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.LOGS}>
+                  <LogsScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.SYSTEM_SETTINGS}>
+                  <SystemSettingsScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.CAMERA_SETTINGS}>
+                  <CameraSettingsScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.FILESYSTEM_SETTINGS}>
+                  <StorageSettingsScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.NETWORK_SETTINGS}>
+                  <ConfigureConnectionScreen useStyles={classes} />
+                </Route>
+                <Route path={routes.REBOOTING}>
+                  <RebootingScreen useStyles={classes} />
+                </Route>
+              </Switch>
+            </main>
+            <Footer />
+          </SettingsContext.Provider>
         </DrawerContext.Provider>
       </div>
     </Router>
