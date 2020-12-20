@@ -80,18 +80,14 @@ FramerateDialog.propTypes = {
 
 export function WifiDialog(props) {
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
-  const [ssid, setSSID] = React.useState();
-  const [password, setPassword] = React.useState();
+  const [ssid, setSSID] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
 
   React.useEffect(() => {
-    console.log('useeffect');
     setHotspotEnabled(props.hotspotEnabled);
-    setSSID(props.ssid);
-    setPassword(props.password);
-  }, [props.hotspotEnabled, props.ssid, props.password]);
+  }, [props.hotspotEnabled]);
   
   const onModeChange = (_e, value) => {
-    console.log('onModeChange');
     const hotspotEnabled = value === "hotspot";
     setHotspotEnabled(hotspotEnabled);
     setSSID(null);
@@ -165,9 +161,7 @@ export function WifiDialog(props) {
 WifiDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
-    hotspotEnabled: PropTypes.bool,
-    ssid: PropTypes.string,
-    password: PropTypes.string
+    hotspotEnabled: PropTypes.bool
 }
 
 export function ConfirmReboot(props) {

@@ -63,7 +63,7 @@ export default function SettingsScreen() {
       console.log('New WiFi config received:', enableHotspot, ssid, password)
       
       const enable = enableHotspot ? 'on' : 'off';
-      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURI(ssid) : '') + '&password=' + (password ? encodeURI(password) : '')) 
+      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURIComponent(ssid) : '') + '&password=' + (password ? encodeURIComponent(password) : '')) 
       .then(() => setRebootRequired(true))
       .catch((e) => {
         console.error('Can\'t enable/disable WiFi hotspot', e);
