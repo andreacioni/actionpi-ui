@@ -93,7 +93,7 @@ export default function SettingsScreen() {
     .then((response) => response.json())
     .then((json) => {
       console.log('Current status:', json);
-      setHotspotEnabled(json['system']['hotspot_enabled']);
+      setHotspotEnabled(json['system']['ap_mode'] === 'Master');
       setFilesystemRW(json['system']['disk_usage'][0]['rw']);
       //setFramerate(json['framerate']);
       setLoading(false);
