@@ -58,12 +58,12 @@ export default function SettingsScreen() {
 
   const history = useHistory();
 
-  const callSetWiFiConfig = (enableHotspot, ssid, password) => {
+  const callSetWiFiConfig = (enableHotspot, countryCode, ssid, password) => {
     if(enableHotspot !== undefined) {
-      console.log('New WiFi config received:', enableHotspot, ssid, password)
+      console.log('New WiFi config received:', enableHotspot, countryCode, ssid, password)
       
       const enable = enableHotspot ? 'on' : 'off';
-      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURIComponent(ssid) : '') + '&password=' + (password ? encodeURIComponent(password) : '')) 
+      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURIComponent(ssid) : '') + '&password=' + (password ? encodeURIComponent(password) : '') + '&country_code=' + (countryCode ? countryCode : '')) 
       .then(() => setRebootRequired(true))
       .catch((e) => {
         console.error('Can\'t enable/disable WiFi hotspot', e);

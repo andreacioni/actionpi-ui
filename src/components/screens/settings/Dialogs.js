@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { InfoOutlined } from '@material-ui/icons'
 import {
   Grid, 
   Slider,
@@ -16,10 +17,13 @@ import {
   FormLabel,
   TextField,
   Typography,
+  IconButton,
+  Tooltip
 } from '@material-ui/core';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import '../../../'
+import country_codes from '../../../country_codes';
 
 export function FramerateDialog(props) {
   const [framerate, setFramerate] = React.useState(props.initialFramerate)
@@ -85,6 +89,9 @@ export function WifiDialog(props) {
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
   const [ssid, setSSID] = React.useState(null);
   const [password, setPassword] = React.useState(null);
+  const [countryCode, setCountryCode] = React.useState(null);
+  
+  const [showTooltip, setShowTooltip] = React.useState(false);
 
   React.useEffect(() => {
     setHotspotEnabled(props.hotspotEnabled);
@@ -95,6 +102,12 @@ export function WifiDialog(props) {
     setHotspotEnabled(hotspotEnabled);
     setSSID(null);
     setPassword(null);
+    setCountryCode(null);
+  };
+
+  const displayTooltip = () => {
+    setShowTooltip(true);
+    setTimeout(() => setShowTooltip(false), 3000);
   };
 
   const handleCancel = () => {
@@ -102,7 +115,7 @@ export function WifiDialog(props) {
   };
   
   const handleOk = () => {
-    props.onClose(isHotspotEnabled, ssid, password);
+    props.onClose(isHotspotEnabled, countryCode ? countryCode.code : null, ssid, password);
   }
 
   return (
@@ -123,13 +136,22 @@ export function WifiDialog(props) {
             </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Autocomplete
-                id="country-code"
-                options={top100Films}
-                getOptionLabel={(option) => option.title}
-                style={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
-              />
+              <Grid container spacing={1}>
+                <Grid item xs={10}>
+                  <Autocomplete
+                    id="country-code"
+                    disabled={isHotspotEnabled}
+                    options={country_codes}
+                    value={countryCode}
+                    getOptionLabel={(country) => country.name}
+                    renderInput={(params) => <TextField {...params} label="Country" />}
+                    onChange={(_e, value) => setCountryCode(value)}
+                  />
+                </Grid>
+                <Grid item xs={2}>
+                  <Tooltip disabled={isHotspotEnabled} onClick={displayTooltip} onBlur={(e) =>  setShowTooltip(false)} open={showTooltip} title="Wireless bandwidth settings differ from every country"><IconButton disabled={isHotspotEnabled}><InfoOutlined/></IconButton></Tooltip>
+                </Grid>
+              </Grid>
             </Grid>
             <Grid item xs={6}>
               <TextField 
