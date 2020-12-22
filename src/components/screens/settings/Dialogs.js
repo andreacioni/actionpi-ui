@@ -83,15 +83,13 @@ FramerateDialog.propTypes = {
 
 export function WifiDialog(props) {
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
-  const [ssid, setSSID] = React.useState();
-  const [password, setPassword] = React.useState();
+  const [ssid, setSSID] = React.useState(null);
+  const [password, setPassword] = React.useState(null);
 
   React.useEffect(() => {
     setHotspotEnabled(props.hotspotEnabled);
-    setSSID(props.ssid);
-    setPassword(props.password);
-  }, [props.hotspotEnabled, props.ssid, props.password]);
-
+  }, [props.hotspotEnabled]);
+  
   const onModeChange = (_e, value) => {
     const hotspotEnabled = value === "hotspot";
     setHotspotEnabled(hotspotEnabled);
@@ -136,19 +134,26 @@ export function WifiDialog(props) {
             <Grid item xs={6}>
               <TextField 
                 id="ssid" 
+                fullWidth
+                margin="normal"
                 disabled={isHotspotEnabled}
-                label="SSID"
-                value={isHotspotEnabled ? '' : (ssid ? ssid : '**********')}
+                label={isHotspotEnabled ? "ActionPi" : "SSID"}
+                value={isHotspotEnabled ? '' : ssid}
                 onChange={(e) => setSSID(e.target.value)}/>
             </Grid>
             <Grid item xs={6}>
             <TextField 
               id="wifi-password" 
-              disabled={isHotspotEnabled}
+              fullWidth
+              margin="normal"
               label="Password"
               type="password"
-              value={isHotspotEnabled ? '' : (password ? password : '**********')}
-              onChange={(e) => setPassword(e.target.value)}/>
+              placeholder={isHotspotEnabled ? '**********' : ''}
+              value={password ? password : ''}
+              onChange={(e) => setPassword(e.target.value)}
+              InputLabelProps={isHotspotEnabled ? {
+                shrink: true,
+              } : undefined}/>
             </Grid>
           </Grid>
         </DialogContent>
@@ -168,9 +173,7 @@ export function WifiDialog(props) {
 WifiDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
-    hotspotEnabled: PropTypes.bool,
-    ssid: PropTypes.string,
-    password: PropTypes.string
+    hotspotEnabled: PropTypes.bool
 }
 
 export function ConfirmReboot(props) {
