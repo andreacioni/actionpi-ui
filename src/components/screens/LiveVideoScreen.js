@@ -13,8 +13,8 @@ const useStyles = makeStyles((theme) => ({
     'height': '100%'
   },
   paper: {
-    padding: theme.spacing(2),
-    color: theme.palette.text.secondary,
+    padding: 10,
+    margin: 10
   },
   buttonContainer: {
     'text-align': 'center',
@@ -40,24 +40,36 @@ export default function LiveVideoScreen() {
   });
 
   const [recording, setRecording] = useState(null);
+  const [previewImage, setPreviewImage] = useState(ImgPlaceholder);
 
   let autoFetchInterval;
-
   const fetchStatusData = () => {
     fetch(BASE_URL + '/api/status')
     .then((response) => response.json())
     .then((v) => {
       setStatus(v)
       setRecording(v['recording'])
-
+      
       if(autoFetchInterval === undefined) {
         autoFetchInterval = setInterval(fetchStatusData, 2000)
       }
     })
     .catch((e) => console.error('There was an error getting status:', e))
-
+    
     return () => {clearInterval(autoFetchInterval)}
   };
+  useEffect(fetchStatusData, []);
+  
+  let autoRefreshInterval;
+  const autoRefreshPreview = () => {
+    setPreviewImage(BASE_URL + '/preview?' + (new Date().getTime()))
+    if(autoRefreshInterval === undefined) {
+      autoRefreshInterval = setInterval(autoRefreshPreview, 2000)
+    }
+
+    return () => {clearInterval(autoRefreshInterval)}
+  };
+  useEffect(autoRefreshPreview, []);
 
   const startRecording = (recording) => {
     setRecording(recording)
@@ -73,13 +85,12 @@ export default function LiveVideoScreen() {
     });
   };
 
-  useEffect(fetchStatusData, []);
   
   return (
     <React.Fragment>
       <NavBar title="ActionPi" />
       <div>
-        <img src={ImgPlaceholder} alt="Live capture" className={classes.expandedImg} />
+        <img defa src={previewImage} alt="Live capture" className={classes.expandedImg} />
         <Typography variant="caption" >
           <i>*Recording quality may be different</i>
         </Typography>
@@ -91,22 +102,37 @@ export default function LiveVideoScreen() {
         </ButtonGroup>
       </div>
       <div>
-        <Paper>
-          <Grid container>
+        <Paper className={classes.paper}>
+          <Grid container spacing={1}>
             <Grid item xs={12}>
               <Typography>Status</Typography>
             </Grid>
             <Grid item xs={6}>
-              <StatPaper icon={<Thermometer/>} title={'CPU Temperature'} value={status['system']['cpu_temperature']}/>
+              <StatPaper icon={<Thermometer/>} 
+                title={'CPU Temperature'} 
+                uom="°C" 
+                value={status['system']['cpu_temperature']}/>
             </Grid>
             <Grid item xs={6}>
-              <StatPaper icon={<Speedometer/>} title={'CPU Load'} value={status['system']['cpu_load']}/>
+              <StatPaper 
+                icon={<Speedometer/>} 
+                title={'CPU Load'} 
+                uom="%" 
+                value={status['system']['cpu_load']}/>
             </Grid>
             <Grid item xs={6}>
-              <StatPaper icon={<Memory/>} title={'RAM Usage'} value={status['system']['mem_usage']}/>
+              <StatPaper 
+                icon={<Memory/>} 
+                title={'RAM Usage'} 
+                uom="%" 
+                value={status['system']['mem_usage']}/>
             </Grid>
             <Grid item xs={6}>
-              <StatPaper icon={<Harddisk/>} title={'Disk Usage'} value={status['system']['disk_usage'][0]['percent']}/>
+              <StatPaper 
+                icon={<Harddisk/>} 
+                title={'Disk Usage'} 
+                uom="%" 
+                value={status['system']['disk_usage'][0]['percent']}/>
             </Grid>
           </Grid>
         </Paper>

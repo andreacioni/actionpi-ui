@@ -26,18 +26,25 @@ export default function StatPaper(props) {
     return (
         <Grid container spacing={2}>
             <Grid item xs={2}>{props.icon}</Grid>
-            <Grid item className={classes.title} xs={8}>{props.title}</Grid>
-            <Grid item className={classes.value} xs={2}>{props.value}</Grid>
+            <Grid item className={classes.title} xs={7}>{props.title}</Grid>
+            <Grid item className={classes.value} xs={3}>{props.value + ' ' + props.uom}</Grid>
         </Grid>
     );
 }
 
 StatPaper.defaultProps = {
-    value: '-'
+    value: 0,
+    uom: '',
+    warnValue: 99999,
+    alarmValue: 99999
 }
 
 StatPaper.propTypes = {
     icon: PropTypes.element,
     title: PropTypes.string.isRequired,
-    value: PropTypes.any
+    value: PropTypes.number,
+    uom: PropTypes.string,
+    warnValue: PropTypes.number,
+    alarmValue: PropTypes.number,
+
 }
