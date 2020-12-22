@@ -15,8 +15,11 @@ import {
   FormControl, 
   FormLabel,
   TextField,
-  Typography
+  Typography,
 } from '@material-ui/core';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import '../../../'
 
 export function FramerateDialog(props) {
   const [framerate, setFramerate] = React.useState(props.initialFramerate)
@@ -120,6 +123,15 @@ export function WifiDialog(props) {
                   <FormControlLabel value="client" control={<Radio />} label="Client" />
               </RadioGroup>
             </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                id="country-code"
+                options={top100Films}
+                getOptionLabel={(option) => option.title}
+                style={{ width: 300 }}
+                renderInput={(params) => <TextField {...params} label="Combo box" variant="outlined" />}
+              />
             </Grid>
             <Grid item xs={6}>
               <TextField 
