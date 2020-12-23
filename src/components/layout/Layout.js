@@ -1,12 +1,10 @@
 import React from 'react';
-import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Drawer from './Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { routes } from '../../App'
-import AppBar from './NavBar'
 import LiveVideoScreen from '../screens/LiveVideoScreen';
 import DownloadVideoScreen from '../screens/RecordingsScreen';
 import SettingsScreen from '../screens/SettingsScreen'

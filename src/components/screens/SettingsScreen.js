@@ -4,23 +4,18 @@ import {
   Switch, 
   IconButton, 
   CircularProgress, 
-  Grid, 
-  Button, 
-  Icon, 
   Tooltip,
  } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
-import SettingsApplications from '@material-ui/icons/SettingsApplications';
-import {Wifi, Replay, SdCard, Camera, Edit, ChevronRight, Check, Cancel, Warning} from '@material-ui/icons';
+import {Wifi, Replay, SdCard, Edit, Warning} from '@material-ui/icons';
 import React from 'react';
 import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
 import { useHistory } from 'react-router-dom';
-import { routes } from '../../App';
-import { FramerateDialog, WifiDialog, ConfirmReboot } from './settings/Dialogs';
+import { WifiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   screenTitle: {
     'margin-bottom': '20px'
   },
