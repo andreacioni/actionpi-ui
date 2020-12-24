@@ -62,14 +62,17 @@ export default function LiveVideoScreen() {
   
   let autoRefreshInterval;
   const autoRefreshPreview = () => {
-    setPreviewImage(BASE_URL + '/preview?' + (new Date().getTime()))
+    if(recording) {
+      setPreviewImage(BASE_URL + '/preview?' + (new Date().getTime()))
+    }
+    
     if(autoRefreshInterval === undefined) {
       autoRefreshInterval = setInterval(autoRefreshPreview, 2000)
     }
 
     return () => {clearInterval(autoRefreshInterval)}
   };
-  useEffect(autoRefreshPreview, []);
+  useEffect(autoRefreshPreview, [recording]);
 
   const startRecording = (recording) => {
     setRecording(recording)
@@ -90,7 +93,7 @@ export default function LiveVideoScreen() {
     <React.Fragment>
       <NavBar title="ActionPi" />
       <div>
-        <img defa src={previewImage} alt="Live capture" className={classes.expandedImg} />
+        <img src={previewImage} alt="Live capture" onError={() => setPreviewImage(ImgPlaceholder)} className={classes.expandedImg} />
         <Typography variant="caption" >
           <i>*Recording quality may be different</i>
         </Typography>
