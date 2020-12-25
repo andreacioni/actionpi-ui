@@ -10,6 +10,8 @@ import PropTypes from 'prop-types';
 
 
 import { DrawerContext } from '../../context/DrawerContext';
+import RebootAlertTooltip from "../RebootAlertTooltip";
+import { SettingsContext } from "../../context/SettingsContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,23 +32,25 @@ export default function NavBar(props) {
 
   const classes = useStyles();
 
+  const {rebootRequired, setRebootRequired} = React.useContext(SettingsContext);
+  const {isDrawerOpened, toggleDrawer} = React.useContext(DrawerContext);
+
   return (
-    <DrawerContext.Consumer>
-      {({ isDrawerOpened, toggleDrawer }) => (
-        <header className={classes.root}>
-          <AppBar position="fixed" className={classes.appBar}>
-            <Toolbar>
-              <IconButton onClick={toggleDrawer} className={classes.menuButton} color="inherit" aria-label="menu">
-                {isDrawerOpened === true ? <ArrowBack /> : <MenuIcon />}
-              </IconButton>
-              <Typography variant="h6" className={classes.title}>
-                {props.title}
-              </Typography>
-            </Toolbar>
-          </AppBar>
-        </header>
-      )}
-    </DrawerContext.Consumer>
+    <header className={classes.root}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
+          <IconButton onClick={toggleDrawer} className={classes.menuButton} color="inherit" aria-label="menu">
+            {isDrawerOpened === true ? <ArrowBack /> : <MenuIcon />}
+          </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            {props.title}
+          </Typography>
+          {rebootRequired && (
+            <RebootAlertTooltip/>
+          )}
+        </Toolbar>
+      </AppBar>
+    </header>
   );
 
 }

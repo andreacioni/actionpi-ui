@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import { WifiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
 import { SettingsContext } from '../../context/SettingsContext'
+import RebootAlertTooltip from "../RebootAlertTooltip";
 
 
 const useStyles = makeStyles(() => ({
@@ -135,7 +136,7 @@ export default function SettingsScreen() {
             title="Reboot" 
             onClick={() => setOpenConfirmRebootDialog(true)}
             subtitle="ActionPi will be rebooted. This is required to apply the changes you made here."
-            action={rebootRequired ? <Tooltip title="Reboot to apply changes"><Warning color="primary"/></Tooltip> : null} />
+            action={rebootRequired ? <RebootAlertTooltip/> : null} />
         </List>
       }
 
