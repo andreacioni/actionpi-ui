@@ -14,6 +14,8 @@ import SettingListItem from './settings/SettingListItem';
 import { useHistory } from 'react-router-dom';
 import { WifiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
+import { SettingsContext } from '../../context/SettingsContext'
+
 
 const useStyles = makeStyles(() => ({
   screenTitle: {
@@ -45,7 +47,7 @@ export default function SettingsScreen() {
   const [openConfirmReboot, setOpenConfirmRebootDialog] = React.useState(false);
   
   const [isLoading, setLoading] = React.useState(true)
-  const [rebootRequired, setRebootRequired] = React.useState(false)
+  const {rebootRequired, setRebootRequired} = React.useContext(SettingsContext);
   
   const [isFilesystemRW, setFilesystemRW] = React.useState(false);
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);

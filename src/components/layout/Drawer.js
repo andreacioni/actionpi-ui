@@ -66,8 +66,6 @@ const useStyles = makeStyles((theme) => ({
 export default function PersistentDrawerLeft() {
   const classes = useStyles();
 
-  const [] = React.useState(false);
-
   return (
     <DrawerContext.Consumer>
       {({ isDrawerOpened, toggleDrawer }) => (

@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Layout() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [rebootRequired, setRebootRequired] = React.useState(false);
 
   const drawer = {
     isDrawerOpened: open,
@@ -59,16 +60,12 @@ export default function Layout() {
     }
   };
 
-  const settings = {
-    rebootRequired: false
-  };
-
   return (
     <Router>
       <div className={classes.root}>
         <CssBaseline />
         <DrawerContext.Provider value={drawer}>
-          <SettingsContext.Provider value={drawer}>
+          <SettingsContext.Provider value={{rebootRequired, setRebootRequired}}>
             <Drawer open={open} />
             <main className={classes.content}>
               <div className={classes.drawerHeader} />
