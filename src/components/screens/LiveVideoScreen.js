@@ -30,10 +30,7 @@ export default function LiveVideoScreen() {
         'cpu_temperature': 0,
         'cpu_load': 0,
         'mem_usage': 0,
-        'disk_usage': [{
-          'mountpoint': '/',
-          'percent': 0
-        }]
+        'disk_usage': []
     },
     'recording': null,
     'framerate': 0
@@ -135,7 +132,7 @@ export default function LiveVideoScreen() {
                 icon={<Harddisk/>} 
                 title={'Disk Usage'} 
                 uom="%" 
-                value={status['system']['disk_usage'][0]['percent']}/>
+                value={status['system']['disk_usage'].length > 0 ? status['system']['disk_usage'].find((e) => e['mountpoint'] === '/media/recordings')['percent'] : '?'}/>
             </Grid>
           </Grid>
         </Paper>
