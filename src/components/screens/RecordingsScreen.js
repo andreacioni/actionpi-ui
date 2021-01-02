@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({}));
         <NavBar title="Recordings" />
 
         <List>
-          {recordingsList.filter((r) => r['name'].endsWith('.h264')).map((r) => 
+          {recordingsList.map((r) => 
             <RecordingTile key={r['name']} fileName={r['name']} fileSize={r['size']} />
           )}
         </List>
