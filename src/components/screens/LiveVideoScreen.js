@@ -44,7 +44,7 @@ export default function LiveVideoScreen() {
 
   let autoFetchInterval;
   const fetchStatusData = () => {
-    fetch(BASE_URL + '/api/status')
+    fetch(BASE_URL + '/status')
     .then((response) => response.json())
     .then((v) => {
       setStatus(v)
@@ -77,7 +77,7 @@ export default function LiveVideoScreen() {
   const startRecording = (recording) => {
     setRecording(recording)
     
-    fetch(BASE_URL + '/api/' + (recording ? 'start' : 'stop'))
+    fetch(BASE_URL + '/' + (recording ? 'start' : 'stop'))
     .then((response) => response)
     .then((v) => {
       setRecording(recording)

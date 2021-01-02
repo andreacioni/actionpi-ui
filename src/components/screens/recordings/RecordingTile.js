@@ -17,7 +17,7 @@ export default function RecordingTile(props) {
             <ListItemIcon>{isVideo ? <Movie /> : <Cancel />}</ListItemIcon>
             <ListItemText primary={props.fileName} secondary={"Size: " + props.fileSize + ' bytes'} />
             <ListItemSecondaryAction>
-                <Link href={BASE_URL + '/api/recording/' + props.fileName}>
+                <Link href={BASE_URL + '/recording/' + props.fileName}>
                     <IconButton disabled={isVideo === false}>
                         <GetApp />
                     </IconButton>         

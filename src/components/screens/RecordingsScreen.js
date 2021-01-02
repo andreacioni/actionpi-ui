@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({}));
     const [recordingsList, setRecordingsList] = useState([]);
 
     useEffect(() => {
-      fetch(BASE_URL + '/api/recordings')
+      fetch(BASE_URL + '/recordings')
       .then((response) => response.json())
       .then((recordings) => setRecordingsList(recordings))
     }, []);

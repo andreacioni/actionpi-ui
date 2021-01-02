@@ -61,7 +61,7 @@ export default function SettingsScreen() {
       console.log('New WiFi config received:', enableHotspot, countryCode, ssid, password)
       
       const enable = enableHotspot ? 'on' : 'off';
-      fetch(BASE_URL + '/api/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURIComponent(ssid) : '') + '&password=' + (password ? encodeURIComponent(password) : '') + '&country_code=' + (countryCode ? countryCode : '')) 
+      fetch(BASE_URL + '/hotspot?enable=' + enable + '&ssid=' + (ssid ? encodeURIComponent(ssid) : '') + '&password=' + (password ? encodeURIComponent(password) : '') + '&country_code=' + (countryCode ? countryCode : '')) 
       .then(() => setRebootRequired(true))
       .catch((e) => {
         console.error('Can\'t enable/disable WiFi hotspot', e);
@@ -76,7 +76,7 @@ export default function SettingsScreen() {
 
   const callSetFileSystemMode = (checked) => {
     const mode = checked ? 'rw' : 'ro';
-    fetch(BASE_URL + '/api/mount?mode=' + mode)
+    fetch(BASE_URL + '/mount?mode=' + mode)
     .then(() => setRebootRequired(true))
     .catch((e) => {
       console.error('Can\'t mount filesystem R/W', e);
@@ -87,7 +87,7 @@ export default function SettingsScreen() {
   };
 
   React.useEffect(() => {
-    fetch(BASE_URL + '/api/status')
+    fetch(BASE_URL + '/status')
     .then((response) => response.json())
     .then((json) => {
       console.log('Current status:', json);
@@ -154,7 +154,7 @@ export default function SettingsScreen() {
         open={openConfirmReboot} 
         onCancel={() => setOpenConfirmRebootDialog(false)}
         onConfirm={() => {
-          fetch(BASE_URL + '/api/reboot');
+          fetch(BASE_URL + '/reboot');
           setOpenConfirmRebootDialog(false);
           history.push("/rebooting");
         }}
