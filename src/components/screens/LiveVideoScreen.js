@@ -5,7 +5,7 @@ import { Thermometer, Speedometer, Memory, Harddisk, Record, Stop } from 'mdi-ma
 import NavBar from '../layout/NavBar';
 import StatPaper from './live_video/StatPaper';
 import ImgPlaceholder from '../../images/stream_placeholder.png'
-import { BASE_URL } from '../../globals'
+import { PREVIEW_URL, BASE_URL } from '../../globals'
 
 const useStyles = makeStyles((theme) => ({
   expandedImg: {
@@ -63,7 +63,7 @@ export default function LiveVideoScreen() {
   let autoRefreshInterval;
   const autoRefreshPreview = () => {
     if(recording) {
-      setPreviewImage(BASE_URL + '/preview?' + (new Date().getTime()))
+      setPreviewImage(PREVIEW_URL + '?' + (new Date().getTime()))
     }
     
     if(autoRefreshInterval === undefined) {
