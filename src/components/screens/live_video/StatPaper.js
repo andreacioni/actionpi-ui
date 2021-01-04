@@ -27,7 +27,7 @@ export default function StatPaper(props) {
         <Grid container spacing={2}>
             <Grid item xs={2}>{props.icon}</Grid>
             <Grid item className={classes.title} xs={7}>{props.title}</Grid>
-            <Grid item className={classes.value} xs={3}>{props.value + ' ' + props.uom}</Grid>
+            <Grid item className={classes.value} xs={3}>{Math.trunc(props.value) + ' ' + props.uom}</Grid>
         </Grid>
     );
 }

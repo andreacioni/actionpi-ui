@@ -132,7 +132,7 @@ export default function LiveVideoScreen() {
                 icon={<Harddisk/>} 
                 title={'Disk Usage'} 
                 uom="%" 
-                value={status['system']['disk_usage'].length > 0 ? status['system']['disk_usage'].find((e) => e['mountpoint'] === '/media/recordings')['percent'] : '?'}/>
+                value={status['system']['disk_usage'].length > 0 ? status['system']['disk_usage'].find((e) => e['mountpoint'] === '/media/recordings')['percent'] : 0}/>
             </Grid>
           </Grid>
         </Paper>
