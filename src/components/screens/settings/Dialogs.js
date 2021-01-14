@@ -85,7 +85,7 @@ FramerateDialog.propTypes = {
     initialFramerate: PropTypes.number.isRequired
 }
 
-export function WifiDialog(props) {
+export function WiFiDialog(props) {
   const [isHotspotEnabled, setHotspotEnabled] = React.useState(false);
   const [ssid, setSSID] = React.useState(null);
   const [password, setPassword] = React.useState(null);
@@ -192,7 +192,7 @@ export function WifiDialog(props) {
   );
 }
 
-WifiDialog.propTypes = {
+WiFiDialog.propTypes = {
     open: PropTypes.bool.isRequired,
     onClose: PropTypes.func,
     hotspotEnabled: PropTypes.bool

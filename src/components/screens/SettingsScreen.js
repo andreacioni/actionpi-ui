@@ -12,7 +12,7 @@ import React from 'react';
 import NavBar from '../layout/NavBar';
 import SettingListItem from './settings/SettingListItem';
 import { useHistory } from 'react-router-dom';
-import { WifiDialog, ConfirmReboot } from './settings/Dialogs';
+import { WiFiDialog, ConfirmReboot } from './settings/Dialogs';
 import { BASE_URL } from '../../globals';
 import { SettingsContext } from '../../context/SettingsContext'
 import RebootAlertTooltip from "../RebootAlertTooltip";
@@ -145,7 +145,7 @@ export default function SettingsScreen() {
         open={openFramerateDialog} 
         onClose={() => setOpenFramerateDialog(!openFramerateDialog)}
       /> */}
-      <WifiDialog 
+      <WiFiDialog 
         hotspotEnabled={isHotspotEnabled}
         open={openWiFiDialog} 
         onClose={callSetWiFiConfig}
