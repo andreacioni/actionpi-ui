@@ -44,7 +44,7 @@ export default function SettingsScreen() {
   const classes = useStyles();
 
   //const [openFramerateDialog, setOpenFramerateDialog] = React.useState(false);
-  const [openWifiDialog, setOpenWifiDialog] = React.useState(false);
+  const [openWiFiDialog, setOpenWiFiDialog] = React.useState(false);
   const [openConfirmReboot, setOpenConfirmRebootDialog] = React.useState(false);
   
   const [isLoading, setLoading] = React.useState(true)
@@ -71,7 +71,7 @@ export default function SettingsScreen() {
       setHotspotEnabled(enableHotspot);
     }
     
-    setOpenWifiDialog(false);
+    setOpenWiFiDialog(false);
   };
 
   const callSetFileSystemMode = (checked) => {
@@ -124,7 +124,7 @@ export default function SettingsScreen() {
             title={"Network (" + (isHotspotEnabled ? 'Hotspot' : 'Client') + ")"} 
             subtitle="Manage network connectivity" 
             button={false}
-            action={<IconButton onClick={() => setOpenWifiDialog(true)}><Edit/></IconButton>} />
+            action={<IconButton onClick={() => setOpenWiFiDialog(true)}><Edit/></IconButton>} />
           <SettingListItem 
             icon={<SdCard />} 
             title="Mount R/W" 
@@ -147,7 +147,7 @@ export default function SettingsScreen() {
       /> */}
       <WifiDialog 
         hotspotEnabled={isHotspotEnabled}
-        open={openWifiDialog} 
+        open={openWiFiDialog} 
         onClose={callSetWiFiConfig}
       />
       <ConfirmReboot 
