@@ -9,7 +9,6 @@ import LiveVideoScreen from '../screens/LiveVideoScreen';
 import DownloadVideoScreen from '../screens/RecordingsScreen';
 import SettingsScreen from '../screens/SettingsScreen'
 import StatisticsScreen from '../screens/StatisticsScreen';
-import LogsScreen from '../screens/LogsScreen';
 import { DrawerContext } from '../../context/DrawerContext';
 import { SettingsContext } from '../../context/SettingsContext';
 import Footer from './Footer';
@@ -81,9 +80,6 @@ export default function Layout() {
                 </Route>
                 <Route exact path={routes.SETTINGS}>
                   <SettingsScreen useStyles={classes} />
-                </Route>
-                <Route path={routes.LOGS}>
-                  <LogsScreen useStyles={classes} />
                 </Route>
                 <Route path={routes.SYSTEM_SETTINGS}>
                   <SystemSettingsScreen useStyles={classes} />
